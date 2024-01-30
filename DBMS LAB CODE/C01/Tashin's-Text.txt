@@ -1,0 +1,40 @@
+create database tashinuiu
+
+CREATE TABLE StudentCourse(
+    name varchar(50),
+    ID int Primary KEY,
+    address varchar(100)
+);
+
+
+CREATE TABLE Student(
+    name varchar(50),
+    ID int,
+    cgpa float,
+    address varchar(100),
+    phone char(11)
+)
+
+CREATE TABLE Course(
+    name varchar(50),
+    c_code varchar(10),
+    credit int,
+    sec char(1),
+    
+    Primary KEY (c_code, sec)
+)
+
+
+CREATE TABLE Student_Course( 
+    ID int,
+    s_id int,
+    c_code varchar(10),
+    sec char(1),
+    
+    PRIMARY key (ID),
+    CONSTRAINT fk_Student_INFO FOREIGN key(s_id) REFERENCES studentinfo(ID),
+    CONSISTENT fk_Course FOREIGN key (c_code, sec) REFERENCES course(c_code, sec)
+);
+
+
+drop database [database name]
