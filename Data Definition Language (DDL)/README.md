@@ -60,4 +60,16 @@ CREATE TABLE IF NOT EXISTS [table_name](
 > - Gray   KEY = UNIQUE
 
 
+## Delete Table
+
+### Way 1:
+```sql
+DROP TABLE [table_Name];   -- SHOW ERROR
+```
+
+### Way 2:
+```sql
+DROP TABLE IF EXISTS [table_Name];  -- Don't SHOW ERROR (Just give a warning)
+```
+
 
