@@ -72,4 +72,6 @@ DROP TABLE [table_Name];   -- SHOW ERROR
 DROP TABLE IF EXISTS [table_Name];  -- Don't SHOW ERROR (Just give a warning)
 ```
 
+## Examples for Practice
+- Example 1 : [Link](https://github.com/TashinParvez/MySQL_From_Zero/tree/master/Data%20Definition%20Language%20(DDL)/Practice/Example%201)
 
