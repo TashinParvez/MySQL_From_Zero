@@ -54,3 +54,10 @@ CREATE TABLE IF NOT EXISTS [table_name](
 );
 ```
 
+> #### SYMBOLES 
+>
+> - Yellow Key = PRIMARY KEY
+> - Gray   KEY = UNIQUE
+
+
+
