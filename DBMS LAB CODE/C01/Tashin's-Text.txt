@@ -21,7 +21,7 @@ CREATE TABLE Course(
     credit int,
     sec char(1),
     
-    Primary KEY (c_code, sec)
+    Primary KEY(c_code, sec)
 )
 
 
@@ -31,10 +31,10 @@ CREATE TABLE Student_Course(
     c_code varchar(10),
     sec char(1),
     
-    PRIMARY key (ID),
+    PRIMARY key(ID),
     CONSTRAINT fk_Student_INFO FOREIGN key(s_id) REFERENCES studentinfo(ID),
     CONSISTENT fk_Course FOREIGN key (c_code, sec) REFERENCES course(c_code, sec)
 );
 
 
-drop database [database name]
+drop database [database name] 
