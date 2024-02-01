@@ -95,6 +95,8 @@ ALTER TABLE [table_Name]
 DROP COLUMN [coll_Name]
 ```
 
+
+
 ## ADD New PRIMARY KEY
 
 ### Way 1 (Single Key):
@@ -117,3 +119,20 @@ ALTER TABLE [table_Name]
 DROP PRIMARY KEY
 ```
 
+
+
+## ADD New UNIQUE constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+CONSTRAINT [constrain_name] UNIQUE( attrib_1, attrib_2) 
+```
+
+## DROP/DELETE UNIQUE constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP CONSTRAINT [constrain_name] 
+```
