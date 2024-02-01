@@ -4,7 +4,7 @@ Welcome to my Data Manipulation Language (DML) notes repository!
 
 
 
-## DATA Insert INTO Database Table
+## Insert DATA INTO Database Table
 
 #### Way 1:
 ```sql
@@ -38,7 +38,7 @@ VALUES (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  co
 
 
 
-## DATA UPDATE INTO Database Table
+## UPDATE DATA INTO Database Table
 
 #### Way 1:
 ```sql
@@ -47,4 +47,15 @@ SET coll1 = value1, coll2 = value2, ......
 WHERE [condition];
 
 ---- IF you dont write WHERE then all row's data will be update
+```
+
+
+
+
+## DELETE DATA INTO Database Table
+
+#### Way 1:
+```sql
+DELETE FROM table_name
+WHERE [condition];
 ```
