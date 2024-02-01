@@ -1,4 +1,4 @@
-# MySQL Notes Repository
+# Data Definition Language (DDL) Notes Repository
 
 Welcome to my MySQL notes repository! This section covers various aspects of MySQL, including database creation, table creation, and some useful shortcuts.
 
