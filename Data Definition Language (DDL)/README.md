@@ -157,3 +157,23 @@ DROP FOREIGN KEY [constrain_name]
 
 
 
+## ADD/SET New DEFAULT constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_name]
+ALTER COLUMN [coll_Name] SET DEFAULT [def_Value] 
+```
+
+## DROP/DELETE DEFAULT constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_name]
+ALTER COLUMN [coll_Name] DROP DEFAULT
+```
+
+
+
+
+
