@@ -136,3 +136,24 @@ CONSTRAINT [constrain_name] UNIQUE( attrib_1, attrib_2)
 ALTER TABLE [table_Name]
 DROP CONSTRAINT [constrain_name] 
 ```
+
+
+
+## ADD New FOREIGN KEY
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+ADD CONSTRAINT [constrain_name] FOREIGN KEY( Attribute_1, Attribute_2 )  REFERENCES [ref_table_Name](ref_Table_colm_Name, ref_Table_colm_Name_2) 
+```
+
+## DROP/DELETE FOREIGN KEY  
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP FOREIGN KEY [constrain_name]
+```
+
+
+
