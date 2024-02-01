@@ -193,3 +193,7 @@ MODIFY COLUMN [coll_Name] [new_DATA_type]
 ALTER TABLE [table_Name]
 RENAME [table_Name] 
 ```
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> ## Next Learn [DML](https://github.com/TashinParvez/MySQL_From_Zero/tree/Tashin/Data%20Manipulation%20Language%20(DML))
