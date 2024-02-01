@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS [table_name](
 > - Gray   KEY = UNIQUE
 
 
-## Delete Table
+## DROP/DELETE Table
 
 ### Way 1:
 ```sql
@@ -93,5 +93,27 @@ ADD COLUMN [coll_Name] [data_Type] [NOT NULL] [UNIQUE] [DEFAULT def_value] [PRIM
 ```sql
 ALTER TABLE [table_Name]
 DROP COLUMN [coll_Name]
+```
+
+## ADD New PRIMARY KEY
+
+### Way 1 (Single Key):
+```sql
+ALTER TABLE [table_Name]
+ADD PRIMARY KEY( Attribute_1 )    /// Single key 
+```
+
+### Way 2 (Composite Key):
+```sql
+ALTER TABLE [table_Name]
+ADD PRIMARY KEY ( Attribute_1, Attribute_2 )   /// Composite Key
+```
+
+## DROP/DELETE PRIMARY KEY
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP PRIMARY KEY
 ```
 
