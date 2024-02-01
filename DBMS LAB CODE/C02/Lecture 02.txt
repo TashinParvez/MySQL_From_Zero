@@ -1,0 +1,73 @@
+----------------- add/Delete column -----------------
+
+ALTER TABLE student ADD COLUMN address VARCHAR(100)
+
+ALTER TABLE student DROP COLUMN address
+
+
+
+----------------- ADD/Remove PRimary KEY -----------------
+
+
+ALTER TABLE [table_Name] ADD PRIMARY KEY( Attribute_1 )    /// Single key 
+
+ALTER TABLE [table_Name] DROP PRIMARY KEY
+
+ALTER TABLE [table_Name] ADD PRIMARY KEY ( Attribute_1, Attribute_2 )   /// Composit Key
+
+
+
+------------------------------- FOREIGN KEY --------------------------------
+
+ALTER TABLE [table_Name] DROP FOREIGN KEY [constrain_name]
+
+ALTER TABLE [table_Name] ADD CONSTRAINT [constrain_name] FOREIGN KEY( Attribute_1, Attribute_2 )  REFERENCES [ref_table_Name](ref_Table_colm_Name, ref_Table_colm_Name_2) 
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   DML  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+----------------- DATA Insert INTO TABLE -----------------
+
+INSERT INTO [table_Name](attrib_1, attrib_2, attrib_2, attrib_3, attrib_4)           /// Dont forget to insert data in PRIMARY KEY
+VALUES (123, 'Tashin Parvez', 'tashinparvez2002@gmail.com', 2.67, '01954449226')     /// Follow the above serial
+
+
+INSERT INTO [table_Name] 
+VALUES ( 'SAFIN Parvez', 1234,  2.67,'DHAKA','01954449226', 'safinparvez2002@gmail.com')  /// FOLLOW table structure Serial
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

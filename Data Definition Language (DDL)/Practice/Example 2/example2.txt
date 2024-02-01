@@ -1,0 +1,108 @@
+-------------------------------------------------------------------------------------------------------------------
+---------------------------------- First Create Given TABLE -------------------------------------------------------
+-------------------------------------------------------------------------------------------------------------------
+
+
+CREATE TABLE items(
+    item_id INT PRIMERY KEY,
+    item_name VARCHAR(100),
+    item_price NUMERIC
+);
+
+CREATE TABLE customers(
+    customer_id INT PRIMARY KEY,
+    customer_phone VARCHAR(11),
+    customer_email TEXT
+);
+
+CREATE TABLE orders(
+    order_id INT PRIMARY KEY,
+    order_date DATE,
+    customer_id INT,
+    
+    CONSTRAINT c_ID FOREIGN KEY(customer_id) REFERENCES customers(customer_id)
+);
+
+CREATE TABLE orders_items(
+    order_id INT,
+    item_id INT,
+    
+    CONSTRAINT i_ID FOREIGN KEY(item_id) REFERENCES items(item_id),
+    CONSTRAINT o_ID FOREIGN KEY(order_id) REFERENCES orders(order_id)
+);
+
+
+
+--------------------------------------------------------------------------------------------------------------
+-----------------------------------  SOLVE QSN PART  ---------------------------------------------------------
+--------------------------------------------------------------------------------------------------------------
+
+
+
+>>>>>>>>>>>>>>>>>>>>>   Q01  <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+1. Change orders_items FOREIGN KEY or order_id
+
+    ALTER TABLE orders_items DROP FOREIGN KEY o_ID;
+
+2. Change Orders Primery key as question said
+
+    ALTER TABLE orders ADD PRIMARY KEY(order_id, customer_id)
+
+3. You Break the orders_items and Orders relation so build it again
+
+    -> Create customer_id in orders_items
+        ALTER TABLE orders_items ADD COLUMN customer_id INT
+
+    -> Create new FOREIGN KEY in orders_items 
+        alter table orders_items add CONSTRAINT odr_cust_ID FOREIGN KEY(order_id, customer_id) REFERENCES orders(order_id, customer_id)
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>   Q02  <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+1. Rremove FOREIGN KEY of Order_Items 
+
+    ALTER TABLE orders_items DROP FOREIGN KEY i_ID
+
+2. Do as QSN said
+
+    ALTER TABLE items MODIFY COLUMN item_id VARCHAR(10)
+
+3. You break the relation btwn items and order_items so build it again 
+
+    -> To make relation you have to make attributes DATA TYPE SAME so, 
+        ALTER table orders_items MODIFY COLUMN item_id VARCHAR(10)
+
+    -> Create Relation
+        ALTER TABLE orders_items ADD CONSTRAINT i_ID FOREIGN KEY(item_id) REFERENCES items(item_id)
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>   Q03  <<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+In order to insert data in orders_items I have to fill it's foreign KEY's Primery Key
+So at first add data in items TABLE
+
+->>    INSERT INTO items(item_id, item_name)
+                VALUES('Fruit001' , 'Banana')
+
+Then I have to insert data to orders Table, But to insert data in orders table I have to insert data in customers TABLE
+So insert data in CUSTROMER table
+
+->>    INSERT INTO customers(customer_id, customer_phone)
+                VALUES( 011 , '0123456789')
+
+then i can add data to orders TABLE
+
+->>     INSERT INTO orders 
+                 VALUES( 1 , '2024-01-31', 11)
+
+no i can able to add date in orders_items TABLE
+
+->>    INSERT INTO orders_items 
+                 VALUES( 1 , 'Fruit001', 11);
+
+
