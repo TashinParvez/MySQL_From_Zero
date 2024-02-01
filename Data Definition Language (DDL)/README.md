@@ -1,6 +1,6 @@
 # Data Definition Language (DDL) Notes Repository
 
-Welcome to my MySQL notes repository! This section covers various aspects of MySQL, including database creation, table creation, and some useful shortcuts.
+Welcome to my Data Definition Language (DDL) notes repository! This section covers various aspects of MySQL, including database creation, table creation, and some useful shortcuts.
 
 ## Create Database
 
@@ -74,4 +74,24 @@ DROP TABLE IF EXISTS [table_Name];  -- Don't SHOW ERROR (Just give a warning)
 
 ## Examples for Practice
 - Example 1 : [Link](https://github.com/TashinParvez/MySQL_From_Zero/tree/master/Data%20Definition%20Language%20(DDL)/Practice/Example%201)
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+## ADD New Column
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+ADD COLUMN [coll_Name] [data_Type] [NOT NULL] [UNIQUE] [DEFAULT def_value] [PRIMARY KEY] [AUTO_INCREMENT]
+```
+
+
+## DROP/DELETE Column
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP COLUMN [coll_Name]
+```
 
