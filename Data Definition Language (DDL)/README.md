@@ -1,6 +1,6 @@
-# MySQL Notes Repository
+# Data Definition Language (DDL) Notes Repository
 
-Welcome to my MySQL notes repository! This section covers various aspects of MySQL, including database creation, table creation, and some useful shortcuts.
+Welcome to my Data Definition Language (DDL) notes repository! This section covers various aspects of MySQL, including database creation, table creation, and some useful shortcuts.
 
 ## Create Database
 
@@ -60,7 +60,7 @@ CREATE TABLE IF NOT EXISTS [table_name](
 > - Gray   KEY = UNIQUE
 
 
-## Delete Table
+## DROP/DELETE Table
 
 ### Way 1:
 ```sql
@@ -75,3 +75,125 @@ DROP TABLE IF EXISTS [table_Name];  -- Don't SHOW ERROR (Just give a warning)
 ## Examples for Practice
 - Example 1 : [Link](https://github.com/TashinParvez/MySQL_From_Zero/tree/master/Data%20Definition%20Language%20(DDL)/Practice/Example%201)
 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+## ADD New Column
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+ADD COLUMN [coll_Name] [data_Type] [NOT NULL] [UNIQUE] [DEFAULT def_value] [PRIMARY KEY] [AUTO_INCREMENT]
+```
+
+
+## DROP/DELETE Column
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP COLUMN [coll_Name]
+```
+
+
+
+## ADD New PRIMARY KEY
+
+### Way 1 (Single Key):
+```sql
+ALTER TABLE [table_Name]
+ADD PRIMARY KEY( Attribute_1 )    /// Single key 
+```
+
+### Way 2 (Composite Key):
+```sql
+ALTER TABLE [table_Name]
+ADD PRIMARY KEY ( Attribute_1, Attribute_2 )   /// Composite Key
+```
+
+## DROP/DELETE PRIMARY KEY
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP PRIMARY KEY
+```
+
+
+
+## ADD New UNIQUE constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+CONSTRAINT [constrain_name] UNIQUE( attrib_1, attrib_2) 
+```
+
+## DROP/DELETE UNIQUE constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP CONSTRAINT [constrain_name] 
+```
+
+
+
+## ADD New FOREIGN KEY
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+ADD CONSTRAINT [constrain_name] FOREIGN KEY( Attribute_1, Attribute_2 )  REFERENCES [ref_table_Name](ref_Table_colm_Name, ref_Table_colm_Name_2) 
+```
+
+## DROP/DELETE FOREIGN KEY  
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+DROP FOREIGN KEY [constrain_name]
+```
+
+
+
+## ADD/SET New DEFAULT constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_name]
+ALTER COLUMN [coll_Name] SET DEFAULT [def_Value] 
+```
+
+## DROP/DELETE DEFAULT constraint
+
+### Way 1:
+```sql
+ALTER TABLE [table_name]
+ALTER COLUMN [coll_Name] DROP DEFAULT
+```
+
+
+
+
+## MODIFY COLOUM Data_type/Type
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+MODIFY COLUMN [coll_Name] [new_DATA_type]
+```
+
+
+
+## RENAME TABLE Name
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+RENAME [table_Name] 
+```
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+> ## Next Learn [DML](https://github.com/TashinParvez/MySQL_From_Zero/tree/Tashin/Data%20Manipulation%20Language%20(DML))
