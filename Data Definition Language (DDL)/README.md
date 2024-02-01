@@ -176,4 +176,20 @@ ALTER COLUMN [coll_Name] DROP DEFAULT
 
 
 
+## MODIFY COLOUM Data_type/Type
 
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+MODIFY COLUMN [coll_Name] [new_DATA_type]
+```
+
+
+
+## RENAME TABLE Name
+
+### Way 1:
+```sql
+ALTER TABLE [table_Name]
+RENAME [table_Name] 
+```
