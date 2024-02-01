@@ -6,7 +6,7 @@ Welcome to my Data Manipulation Language (DML) notes repository!
 
 ## DATA Insert INTO Database Table
 
-### Way 1:
+#### Way 1:
 ```sql
 INSERT INTO [table_Name] (attrib_1, attrib_2, attrib_2, attrib_3, attrib_4)           
 VALUES (coll1_val, coll2_val,  coll3_val, coll4_val)
@@ -17,7 +17,7 @@ VALUES (coll1_val, coll2_val,  coll3_val, coll4_val)
 ---- USE When you want to insert data into a few columns
 ```
 
-### Way 2:
+#### Way 2:
 ```sql
 INSERT INTO [table_Name] 
 VALUES (coll1_val, coll2_val,  coll3_val, coll4_val)
@@ -27,10 +27,24 @@ VALUES (coll1_val, coll2_val,  coll3_val, coll4_val)
 ----- USE When you want to insert data in every column
 ```
 
-### Way 3:
+#### Way 3:
 ```sql
 INSERT INTO [table_Name] 
 VALUES (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  coll3_val, coll4_val)
 
 ---- USE when Multiple data insert  [Multiple rows input]
+```
+
+
+
+
+## DATA UPDATE INTO Database Table
+
+#### Way 1:
+```sql
+UPDATE [table_name]
+SET coll1 = value1, coll2 = value2, ......
+WHERE [condition];
+
+---- IF you dont write WHERE then all row's data will be update
 ```
