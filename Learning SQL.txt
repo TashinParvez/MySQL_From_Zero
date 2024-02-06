@@ -1,0 +1,186 @@
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   DDL  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+-----------------------  Create DATABASE  --------------------
+
+WAY 1: CREATE DATABASE [database_Name];
+       -> SHOW ERROR IF DATABASE exist
+WAY 2: CREATE DATABASE IF NOT EXISTS [database_Name];
+       -> Don't SHOW ERROR IF DATABASE exist
+
+
+
+-----------------------  DELETE DATABASE  ---------------------
+
+WAY 1: DROP DATABASE [database_Name];             ----> SHOW ERROR
+WAY 2: DROP DATABASE IF EXISTS [database_Name];   ----> Don't SHOW ERROR
+
+
+
+-----------------------  CREATE TABLE  ----------------------
+
+CREATE TABLE [table_name](
+       coll_Name   datatype_name    [NOT NULL] [DEFAULT def_Value] [AUTO_INCREMENT],
+       coll_Name   datatype_name    [NOT NULL] [DEFAULT def_Value] [AUTO_INCREMENT],
+       ...
+       ...
+       coll_Name   datatype_name     [PRIMARY KEY] [UNIQUE]  [NOT NULL] [DEFAULT def_Value] [AUTO_INCREMENT],
+
+
+       CONSTRAINT  constrain_name  PRIMARY KEY(coll_Name, coll_Name_2),     /// No Space btwn ->  KEY() 
+                                                                            /// Declare primary key side to the datatype name is a bad practice
+       CONSTRAINT  constrain_name  UNIQUE(coll_Name_3, coll_Name_4),       
+
+
+       CONSTRAINT  constrain_name  FOREIGN KEY(coll_Name_5, coll_Name_6)
+                                   REFERENCES ref_table_Name(ref_Table_colm_Name, ref_Table_colm_Name_2)    /// No comma no semiacolon in the last line
+                     
+);
+
+
+/* -->>  SYMBOLES
+
+- Yellow Key = PRIMARY KEY
+- Gray   KEY = UNIQUE
+
+*/
+
+
+CREATE TABLE IF NOT EXISTS [table_name](
+
+)
+
+
+
+-----------------------  DELETE TABLE  ----------------------
+ 
+WAY 1: DROP TABLE [table_Name];
+       -> SHOW ERROR
+WAY 2: DROP TABLE IF EXISTS [table_Name];  -- Don't SHOW ERROR (Just give a warning)
+
+
+
+-----------------------  Shortcuts  ----------------------
+
+1. ctrl + Enter  ---->  Go Click
+
+
+
+----------------- ADD/DROP column -----------------
+
+ALTER TABLE [table_Name] ADD COLUMN [coll_Name] [data_Type] [NOT NULL] [UNIQUE] [DEFAULT def_value] [PRIMARY KEY] [AUTO_INCREMENT]
+
+ALTER TABLE [table_Name] DROP COLUMN [coll_Name]
+
+
+
+----------------- ADD/DROP PRIMARY KEY -----------------
+
+
+ALTER TABLE [table_Name] ADD PRIMARY KEY( Attribute_1 )    /// Single key 
+
+ALTER TABLE [table_Name] ADD PRIMARY KEY ( Attribute_1, Attribute_2 )   /// Composite Key
+
+ALTER TABLE [table_Name] DROP PRIMARY KEY
+
+
+
+----------------- ADD/DROP UNIQUE constraint -----------------
+
+ALTER TABLE [table_name]
+CONSTRAINT [constrain_name] UNIQUE( attrib_1, attrib_2) 
+
+ALTER TABLE [table_name]
+DROP CONSTRAINT [constrain_name] 
+
+
+
+----------------- ADD/DROP FOREIGN KEY -----------------
+
+ALTER TABLE [table_Name] DROP FOREIGN KEY [constrain_name]
+
+ALTER TABLE [table_Name] ADD CONSTRAINT [constrain_name] FOREIGN KEY( Attribute_1, Attribute_2 )  REFERENCES [ref_table_Name](ref_Table_colm_Name, ref_Table_colm_Name_2) 
+
+
+
+----------------- ADD/DROP DEFAULT constraint -----------------
+
+ALTER TABLE [table_name]
+ALTER COLUMN [coll_Name] SET DEFAULT [def_Value] 
+ 
+ALTER TABLE [table_name]
+ALTER COLUMN [coll_Name] DROP DEFAULT 
+
+
+----------------- MODIFY COLOUM Type -----------------
+
+ALTER TABLE [table_Name] MODIFY COLUMN [coll_Name] [new_DATA_type]
+
+
+
+----------------- RENAME TABLE Name -----------------
+
+ALTER TABLE [table_Name] RENAME [table_Name]
+
+
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   DML  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+
+----------------- DATA Insert INTO TABLE -----------------
+
+INSERT INTO [table_Name](attrib_1, attrib_2, attrib_2, attrib_3, attrib_4)           /// Dont forget to insert data in PRIMARY KEY
+VALUES (coll1_val, coll2_val,  coll3_val, coll4_val)                                 /// Follow the above serial
+---- When you want to insert data to a few column
+
+
+INSERT INTO [table_Name] 
+VALUES (coll1_val, coll2_val,  coll3_val, coll4_val)                                /// FOLLOW table structure Serial [Coloum Order wise]
+---- When you want to instert data in every column
+
+
+INSERT INTO [table_Name] 
+VALUES (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  coll3_val, coll4_val)
+---- Multiple data insert 
+
+
+
+----------------- DATA UPDATE IN TO TABLE ----------------- ************************
+
+UPDATE [table_name]
+SET coll1 = value1 , coll2 = value2, ....
+WHERE [condition];
+
+---- IF you dont write WHERE then all row's data will be update
+---- 
+
+
+
+----------------- DATA DELETE IN TO TABLE ----------------- ************************
+
+DELETE FROM table_name
+WHERE [condition];
+
+
+
+
+************************************************ DATA Search INTO TABLE ************************************************
+
+
+
+
+
+
+
+
