@@ -1,0 +1,132 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+DELETE FROM student
+WHERE ID > 123
+
+
+
+
+UPDATE student
+set address = "UTTARA"
+WHERE name = "Tashin Parvez" 
+
+
+
+
+SELECT first_name, last_name, salary, department_id
+FROM employees
+
+
+
+SELECT first_name, last_name, salary, department_id
+FROM employees
+WHERE salary>14000;
+
+
+SELECT first_name, last_name, salary *12 AS yearly_SALARY, department_id
+FROM employees
+WHERE salary>14000 AND id<124;
+
+
+/*
+year(hire_date)  ----> to get YEAR from DATABASE
+month(hire_date) ----> to get month from DB 
+*/
+
+
+SELECT first_name, last_name, salary, department_id, (2024 - year(hire_date)) AS Year_of_exp
+FROM employees
+WHERE ( 2024 - year(hire_date) ) > 5
+
+
+
+
+------- LIKE 
+
+SELECT first_name, last_name, salary, department_id
+FROM employees
+WHERE ( 2024 - year(hire_date) ) > 5 AND first_name LIKE "s%n";
+
+
+
+
+\_  ----> have underscode (Handle Special Char)
+
+
+
+
+------------ Sort ----------
+
+SELECT first_name, last_name, salary, department_id, (2024 - year(hire_date)) AS Year_of_experience 
+FROM employees
+WHERE ( 2024 - year(hire_date) ) > 5
+ORDER BY salary 
+
+
+ORDER BY salary ASC   ----> for ascending
+ORDER BY salary DESC  ----> for descending
+
+
+
+SELECT first_name, last_name, salary, department_id, (2024 - year(hire_date)) AS Year_of_experience 
+FROM employees
+WHERE ( 2024 - year(hire_date) ) > 5 
+ORDER BY first_name , salary
+
+
+
+------------- Limit ----------
+
+SELECT first_name, last_name, salary, department_id, (2024 - year(hire_date)) AS Year_of_experience 
+FROM employees
+WHERE ( 2024 - year(hire_date) ) > 5 
+ORDER BY first_name , salary
+LIMIT 5         /* First Five   */
+
+
+LIMIT 3, 7
+      from(index)  much
+
+
+
+
+--------- DISTINCT ------------
+
+SELECT DISTINCT salary
+FROM employees
+WHERE ( 2024 - year(hire_date) ) > 5 
+ORDER BY salary
+LIMIT 3
+
+
+/* 
+        DISTINCT applicable for all columns 
+*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
