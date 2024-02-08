@@ -6,7 +6,7 @@
 
 -----------------------  Create DATABASE  --------------------
 
-WAY 1: CREATE DATABASE [database_Name];
+WAY 1: CREATE DATAB ASE [database_Name];
        -> SHOW ERROR IF DATABASE exist
 WAY 2: CREATE DATABASE IF NOT EXISTS [database_Name];
        -> Don't SHOW ERROR IF DATABASE exist
@@ -126,6 +126,17 @@ ALTER TABLE [table_Name] MODIFY COLUMN [coll_Name] [new_DATA_type]
 ALTER TABLE [table_Name] RENAME [table_Name]
 
 
+----------------- Comment -----------------
+#        This is single line comment
+
+
+/*          This 
+             is 
+          multiple
+            line 
+           comment                
+*/
+
 
 
 
@@ -156,26 +167,360 @@ VALUES (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  co
 
 
 
------------------ DATA UPDATE IN TO TABLE ----------------- ************************
+----------------- DATA UPDATE TABLE ----------------- ************************
 
 UPDATE [table_name]
 SET coll1 = value1 , coll2 = value2, ....
 WHERE [condition];
 
----- IF you dont write WHERE then all row's data will be update
+---- IF you dont write WHERE then every row's data will be update
 ---- 
 
+/*
+   Condition will be on column
+   Example: 
+   CGPA < 3.35
+   id IS NOT NULL
+*/
 
 
------------------ DATA DELETE IN TO TABLE ----------------- ************************
+----------------- DATA DELETE FROM TABLE ----------------- ************************
 
 DELETE FROM table_name
 WHERE [condition];
+
+/*
+   Condition will be on column
+   Example: 
+   CGPA < 3.35
+   id IS NOT NULL
+*/
 
 
 
 
 ************************************************ DATA Search INTO TABLE ************************************************
+/*
+    Temporary view of the table (NO EFFECT ON TABLE / NO DATA LOSS)
+*/
+
+************************ Read Full DATABASE
+SELECT *
+FROM [table_name]
+
+/*
+   * = all column
+   default = all row (WERE IS NOT GIVEN)
+*/
+
+--- Try to READ less as much as you can
+
+
+
+
+********************** READ Few Column (COLUMN Filter / Show specific COLUMN)
+
+SELET coll_1, 
+      coll_2
+FROM [table_Name]
+
+
+/*
+Only coll1 and coll2 will be show
+*/
+
+
+********************** Column aliasing (COLUMN Renaming / Do Calculation in COLUMN)
+
+SELET coll_1 + 3, 
+      coll_2 * 4
+FROM [table_Name]
+
+        --------------------
+
+SELET coll_1 + coll_4, 
+      coll_2 / coll_5
+FROM [table_Name]
+
+/*
+column names will be  coll_1 + coll_4,  coll_2 / coll_5
+*/
+
+
+SELET coll_1 + coll_4 AS new_Coll_name_1, 
+      coll_2 / coll_5 AS new_coll_name_2
+FROM [table_Name]
+
+/*
+column names will be  new_Coll_name_1,  new_coll_name_2
+*/
+
+
+/* Example
+
+SELECT employee_id ,
+	salary/1000,
+       salary + salary*commission_pct AS TOTAL_Salary
+FROM employees;
+
+*/
+
+///  salary/1000 ----> show salary in thousand formate
+
+
+
+
+************* ROW Filtering (Showing specific row)  *************************
+
+SELECT coll_1, coll_2
+FROM [table_name]
+WHERE [condition]
+
+
+/*
+  MySQL 
+  ------------------------
+  and operation:  AND, &&
+  or Operation: OR, ||
+  not Operation: NOT, !
+
+  ------------------------
+  DESC --> Big to small
+  ASC  --> small to Big
+*/
+
+
+/*
+   Condition will be on column
+   Examples of Condition:
+   CGPA < 3.35
+   id IS NOT NULL
+   coll_1 > Coll_4
+   (coll_1 > Coll_4)  AND (coll_1 > Coll_2)
+   dept = 50 OR salary > 1000
+*/
+
+
+
+
+****************** Showing sorted DATA ******************
+
+SELECT coll_1, coll_2
+FROM [table_name]
+WHERE [condition]
+ORDER BY coll_name [ASC|DESC], coll_name [ASC|DESC] 
+
+
+
+/*
+SELECT first_name,
+		email,
+        salary,
+        2024 - YEAR(hire_date) AS experience
+        
+FROM employees
+ORDER BY (2024 - YEAR(hire_date)) DESC
+*/
+
+
+
+
+****************** Showing distinct rows/data ******************
+
+SELECT DISTINCT [coll1_name]
+FROM [table_Name]
+
+
+/*
+    Show only coll 1 distinct elements
+*/
+
+
+SELECT DISTINCT [coll1_name], [coll2_name]
+FROM [table_Name]
+
+
+/*
+    Show only (coll 1 and coll 2) [act as one element] distinct elements
+*/
+
+
+
+
+
+****************** Showing LIMITED NUMBER OF rows (lIMIT Operation) ******************
+
+------ Way 1
+SELECT DISTINCT [coll_name]
+FROM [table_name]
+where [condition]
+ORDER BY [coll_name] DESC
+LIMIT [show];  -----------------------> Show top 3
+
+
+
+//*  Example: 
+     
+SELECT DISTINCT salary
+FROM employees
+
+ORDER BY salary desc
+LIMIT  3;
+*//
+
+
+---------------- Way 2
+
+SELECT DISTINCT [coll_name]
+FROM [table_name]
+ORDER BY [coll_name] DESC
+LIMIT [offset/drop/index_included], [show]; ----------> 
+     
+/// Offset optional [no optional means way 1]
+/// Index start from 0(zero)
+
+
+
+//*  Example: 
+     
+SELECT DISTINCT salary
+FROM employees
+
+ORDER BY salary desc
+LIMIT  1, 5; ---------------> 
+    
+*//
+
+
+
+
+****************** Variations ******************
+
+--------- Div: 
+
+10 DIV 4 = 2    (Integer)
+10 / 4   = 2.5  (Float)
+
+
+--------- Between...AND:
+
+SELECT [coll_name]
+FROM [table_name]
+# where salary >=1000 AND salary<=10000  ------> OLD APPROACH
+
+WHERE salary BETWEEN 1000 AND 10000      ------> two values are included
+
+
+
+--------- NOT Between...AND:
+
+SELECT [coll_name]
+FROM [table_name]
+# where salary < 1000 AND salary > 10000  ------> OLD APPROACH
+
+WHERE salary NOT BETWEEN 1000 AND 10000      ------> two values are excluded
+
+
+
+
+--------- IN :
+
+SELECT [coll_name]
+FROM [table_name]
+# where manager_id = 101 OR manager_id = 201 OR manager_id = 301  ------> OLD APPROACH
+
+WHERE manager_id IN(101, 201, 301)     ------>  equal
+
+
+
+
+--------- NOT IN :
+
+WHERE manager_id NOT IN(101, 201, 301)     ------>  not equal
+
+
+
+
+----------------------- LIKE (String pattern Match) ---------------------------------------------
+
+%  (percentage) : 0 to inf Char (as start operation on TOC)
+_ (underscore)  : exactaly one char
+
+
+SELECT [coll_name]
+FROM [table_name]
+WHERE [coll_name] LIKE "want_to_match"
+
+
+/* 
+       SELECT *
+       FROM employees
+       WHERE last_name LIKE "%g";
+*/
+
+
+----------------------- Boolean ---------------------------------------------
+
+
+SELECT [coll_name]
+FROM [table_name]
+WHERE [coll_name] IS [TRUE or FALSE]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
