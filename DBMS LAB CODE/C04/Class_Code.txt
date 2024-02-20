@@ -1,0 +1,137 @@
+--------------------------- 20-2-24 -------------------------
+
+T01 ------> Aggregate function
+
+SELECT MAX(salary), MIN(salary)
+FROM employees 
+
+
+
+SELECT MAX(salary), MIN(salary), COUNT(employee_id), SUM(salary)
+FROM employees
+
+/// Count by default DISTINCT
+
+
+
+---------- GROUP BY 
+
+SELECT department_id, MAX(salary), MIN(salary), COUNT(employee_id), SUM(salary)
+FROM employees 
+GROUP BY department_id
+
+
+
+SELECT department_id, MAX(salary), MIN(salary), COUNT(employee_id), SUM(salary)
+FROM employees 
+WHERE department_id>50
+GROUP BY department_id
+
+
+
+SELECT department_id, MAX(salary), MIN(salary), COUNT(employee_id) as Emp_CNT, SUM(salary)
+FROM employees 
+WHERE department_id>50 
+GROUP BY department_id
+ORDER BY Emp_CNT DESC
+
+
+
+
+SELECT first_name, salary
+FROM employees
+HAVING salary> AVG(salary) 
+
+
+
+SELECT department_id, MAX(salary), MIN(salary), COUNT(employee_id) as Emp_CNT, SUM(salary)
+FROM employees 
+WHERE department_id>50 
+GROUP BY department_id
+HAVING AVG(salary) > 10000
+
+
+
+/// after group BY everything works on the Resultant table
+
+
+
+
+
+-------------------------------- Join --------------------------
+
+
+--------- Inner Join
+
+SELECT first_name, departments.department_name
+FROM employees as EMP INNER JOIN departments as DEPT
+ON EMP.department_id = DEPT.department_id
+
+
+
+/// On works for the connetion of multiple tables (Condition on ATTRIBUTES)
+
+
+SELECT first_name, DEPT.department_name
+FROM employees as EMP INNER JOIN departments as DEPT
+ON EMP.department_id = DEPT.department_id
+
+GROUP BY EMP.department_id
+Having count(EMP.department_id) > 5;
+
+
+
+
+
+------------ Left Join
+
+SELECT count(*) 
+FROM employees as EMP RIGHT JOIN departments as DEPT 
+ON EMP.department_id = DEPT.department_id;
+
+
+
+
+-------- Cross Join
+
+SELECT count(*) 
+FROM employees as EMP 
+CROSS JOIN departments as DEPT 
+WHERE DEPT.department_id = EMP.department_id
+
+
+
+SELECT count(*) 
+FROM employees as EMP 
+CROSS JOIN departments as DEPT;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

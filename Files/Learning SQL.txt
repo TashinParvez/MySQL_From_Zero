@@ -429,7 +429,7 @@ SELECT [coll_name]
 FROM [table_name]
 # where manager_id = 101 OR manager_id = 201 OR manager_id = 301  ------> OLD APPROACH
 
-WHERE manager_id IN(101, 201, 301)     ------>  equal
+WHERE manager_id IN(101, 201, 301)     ------>  equal (equal check for few Values)
 
 
 
@@ -472,29 +472,193 @@ WHERE [coll_name] IS [TRUE or FALSE]
 
 
 
+----------------------- Condition Statement (CASE WHEN) ---------------------------
+/*
+
+*/
+
+SELECT [coll_name],
+       CASE
+              WHEN [salary_coll]>2000 THEN 'A'
+              WHEN [salary_coll] BETWEEN THEN 'B'
+              ELSE 'C'
+       END AS 'Salary_rank_Coll_name'
+FROM [table_name]
+WHERE [condition]
 
 
 
 
 
 
+/*
+       Numeric,String, DATE function Works Row Wise
+       You can use func in SELECT and WHERE
+
+*/
+
+
+
+----------------------- Numeric Functions ---------------------------
+
+
+ABS()         ---->  SELECT ABS([coll_name])
+
+FLOOR()       ---->  SELECT FLOOR([coll_name])
+
+CEIL()       ---->  SELECT CEIL([coll_name])
+
+
+
+ROUND(x)/Round(x,D) ------> SELECT ROUND([coll_name])
+
+Example: 
+SELECT ROUND(1.34)         ---> 1
+SELECT ROUND(1.34, 1)      ---> 1.3
+SELECT ROUND(1.45, 1)      ---> 1.5
+
+
+
+TRUNCATE(x,D)      -------> SELECT TRUNCATE([coll_name])
+
+Example:  
+SELECT TRUNCATE(1.34, 1)      ---> 1.3
+SELECT TRUNCATE(1.45, 1)      ---> 1.4 
 
 
 
 
 
 
+----------------------- String Functions ---------------------------
+
+UPPER()  
+LOWER()
+REVERSE()
+
+CONCATE()  ----> concatenation of string 
+
+Example: CONCAT(first_name,' ', last_name) AS full_Name
+
+
+/// bIG Example
+
+SELECT employee_id,first_name,
+		CASE 
+       		WHEN salary>=1000 THEN
+				CONCAT(
+            		salary DIV 1000,' Thousands ',
+            		(salary%1000) DIV 100, ' Hundreds ',
+            		salary % 100, ' Taka'
+            		  )
+            WHEN salary>=100  THEN
+				CONCAT(
+            		(salary) DIV 100, ' Hundreds ',
+            		salary % 100, ' Taka'
+            		  )	
+            ELSE
+				CONCAT( 
+            		salary % 100, ' Taka'
+            		)	
+            
+		END AS AMOUNT, salary
+FROM employees
+ORDER BY salary ASC;
+
+
+///
+
+
+
+
+SUBSTR(str,pos)      ------> SUBSTR(first_name , 3)   [3rd position included] 
+                     ------> output(first_name's 3rd index to last)
+                     ------> String index count from 1
+
+
+
+SUBSTR(str,pos,len)      ------> SUBSTR(first_name , 3, 4)   [From 3rd position and Take 4 index]
+
+
+LEFT(str, len)           ------> LEFT('abcd', 2) => ab
+RIGHT(str,len)           ------> RIGHT('abcd', 2) => cd
+
+
+
+
+----------- LPAD ----------- (Increase string Length)
+
+LPAD(str, len, padstr)    
+
+/// SELECT LPAD('abcd', 8, 'xyz') 
+/// -- Output: xyzxabcd  
+///            ----
+
+
+
+RPAD(str, len, padstr)
+
+/// SELECT RPAD('abcd',6,'x')
+/// -- Output:  abcdxx
+///                 --
+
+
+
+
+/**** BIG EXAMPLE
+
+SELECT employee_id,
+		LOWER(
+			CONCAT(
+				SUBSTR(first_name,1,2)
+        		,'_',            
+           	 RIGHT(last_name,2)
+          	  )
+        ) AS Code_NAME
+FROM employees
+ORDER BY salary ASC;
+
+-------------------------> MORE WORK ( COUNT THER TOTAL LEn id and put len-4 starts in the code Name )
+
+***/
 
 
 
 
 
 
+-----------------------------------------------------------------------
+----------------------- DATE TIME Functions ---------------------------
+-----------------------------------------------------------------------
+
+
+NOW()             -----------> returns the current datetime
+CURDATE()         -----------> returns the current date
+CURTIME()         -----------> returns the current time
+
+
+
+DATE(datetime)      --------------> only date part      
+TIME(datetime)      --------------> only time part
+HOUR(datetime)      --------------> only hour part
+MINUTE(datetime)    --------------> only minute part
+SECOND(datetime)    --------------> only second part
+DAY(datetime)       --------------> only day part
+MONTH(datetime)     --------------> only month part
+YEAR(datetime)      --------------> only year part
 
 
 
 
+DATEDIFF(datetime1, datetime2)    ------------>  Return number of days
+TIMEDIFF(datetime1, datetime2)    ------------>  Return time diff
 
+
+
+DATE_ADD(datetime, INTERVAL n unit)                 ///  unit = SECOND /MINUTE /HOUR / DAY /MONTH /YEAR
+DATE_SUB(datetime, INTERVAL n unit) 
+
+EXAMPLE:  DATE_ADD(hire_date, INTERVAL 1 DAY)
 
 
 
