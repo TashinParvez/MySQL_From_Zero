@@ -232,6 +232,9 @@ Only coll1 and coll2 will be show
 
 ********************** Column aliasing (COLUMN Renaming / Do Calculation in COLUMN)
 
+---->>  Can USE alicasing: GROUP BY, HAVING, ORDER USE
+
+
 SELET coll_1 + 3, 
       coll_2 * 4
 FROM [table_Name]
@@ -308,7 +311,7 @@ WHERE [condition]
 SELECT coll_1, coll_2
 FROM [table_name]
 WHERE [condition]
-ORDER BY coll_name [ASC|DESC], coll_name [ASC|DESC] 
+ORDER BY coll_name [ASC|DESC], coll_name [ASC|DESC] , .........
 
 
 
@@ -577,7 +580,7 @@ SUBSTR(str,pos)      ------> SUBSTR(first_name , 3)   [3rd position included]
 
 
 
-SUBSTR(str,pos,len)      ------> SUBSTR(first_name , 3, 4)   [From 3rd position and Take 4 index]
+SUBSTR(str,pos,len)      ------> SUBSTR(first_name , 3, 4)   [From 3rd position and Take 4 index, index start from 1]
 
 
 LEFT(str, len)           ------> LEFT('abcd', 2) => ab
@@ -659,6 +662,191 @@ DATE_ADD(datetime, INTERVAL n unit)                 ///  unit = SECOND /MINUTE /
 DATE_SUB(datetime, INTERVAL n unit) 
 
 EXAMPLE:  DATE_ADD(hire_date, INTERVAL 1 DAY)
+
+
+
+
+
+
+-----------------------------------------------------------------------
+-------------------------- NULL Problem -------------------------------
+----------------------- COALESCE Functions ----------------------------
+-----------------------------------------------------------------------
+
+// If MySQL find NULL one in a calculation then it stop calculation
+
+COALESCE() ---> Return first Not Null value 
+
+
+COALESCE(NULL, 10, 100, NULL)  ----> return 10
+COALESCE(10, 21, 100, NULL)  ----> return 10
+COALESCE(10, 21, 100, NULL)  ----> return 10
+
+
+Example 1:
+SELECT (salary + salary*COALESCE(Increment, 0)) AS Total_Salary
+
+
+Example 2:
+SELECT customer_mail, COALESCE(salary + (salary*12), 0) AS total_salary
+From customer;
+
+
+
+
+
+                      Aggregat, Join
+Basic -------------------------------------------> Advanced
+
+
+
+/*
+
+SELECT    (Aggregat_Func)
+FROM
+WHERE
+ORDER BY
+LIMIT
+
+*/
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Aggregate Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+--> SELECT groupFunc(Coll_1)    /// menas it will aply on whol column
+
+
+Aggregate Function
+-------------------
+MAX(Coll_1)   , MAX(DISTINCT Coll_1) 
+MIN(Coll_1)   , MIN(DISTINCT Coll_1)
+SUM(Coll_1)   , SUM(Coll_1) 
+AVG(Coll_1)   , AVG(Coll_1)  
+COUNT(Coll_1) , COUNT(Coll_1) , COUNT(*)
+
+
+///  COUNT(*) ---> to solve Null not count problem, count(*) will take full row as a input and NULL will not create problem
+
+
+
+
+
+SELECT MAX(Coll_1), MIN(Coll_1), COUNT(Coll_1), SUM(Coll_1) , AVG(Coll_1)
+
+
+---> Output: No of Rows == Num of Groups 
+
+---> default : Full table 1 group (So output one Row)
+
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    Creating Group      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+/*
+
+SELECT
+FROM
+WHERE
+
+GROUP BY    Coll_1, Coll_2.. | Expression_1, Expression_2....    <<----------------
+
+ORDER BY
+LIMIT
+
+*/
+
+
+
+----> When using Group By You can't print a column, cz it's already in a Group.
+----> For showing column data you have to use aggregate Func.
+----> 
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    Group Filtering      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+/*
+
+SELECT
+FROM
+WHERE        <<<------------- Filter before creating Group
+GROUP BY    
+ORDER BY
+LIMIT
+
+*/
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Having 
+
+--> If you want to filter after creating Group.
+
+/*
+
+SELECT
+FROM
+WHERE       
+GROUP BY    
+
+HAVING condition        <<<----- Aggregat Func related condition
+
+ORDER BY
+LIMIT
+
+*/
+
+
+
+EXAMPLE 1: 
+--------------------
+SELECT  LEFT(first_name,1) AS First_Char , COUNT(*)
+FROM employees
+WHERE job_id != 'IT_PROG'
+GROUP BY LEFT(first_name,1)
+HAVING COUNT(*)>=5
+ORDER BY COUNT(*) ASC;
+
+
+EXAMPLE 2: 
+--------------------
+SELECT  SUBSTR(phone_number,5,3)  AS Mid_3 , COUNT(*)
+FROM employees 
+GROUP BY SUBSTR(phone_number,5,3);
+
+
+EXAMPLE 3: 
+--------------------
+SELECT YEAR(hire_date) as YR, MONTH(hire_date) ,COUNT(*) 
+FROM employees 
+GROUP BY YR, MONTH(hire_date)
+ORDER BY hire_date;
+
+
+EXAMPLE 4: 
+--------------------
+SELECT department_id,
+	CASE
+	     WHEN salary<10000 THEN 'A'
+            WHEN 10000<= salary <= 20000 THEN 'B'
+            ELSE 'C'
+        END AS SALARY_class,
+        AVG(salary) 
+FROM employees 
+GROUP BY department_id, SALARY_class
+ORDER BY department_id;
+
+
+
+
 
 
 
