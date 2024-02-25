@@ -1,0 +1,44 @@
+
+
+------------------------------------------------------------------
+----------------------   Question No 4   -------------------------
+------------------------------------------------------------------
+
+
+>>>>>> (i)
+Find the post contents along with the user ID which post does not have any comment.
+------------------------------------------------------------------
+SELECT p.content, p.user_id
+FROM post AS p
+     Left JOIN 
+     comment AS c
+     ON p.post_id = c.post_id 
+     
+WHERE c.post_id IS NULL;
+
+
+
+
+>>>>>> (ii)
+Get the details about all female users who have an ID in between 2 to 15.
+------------------------------------------------------------------
+SELECT *
+FROM user 
+WHERE user_id BETWEEN 2 AND 15 
+      AND 
+      gender = 'female'
+ 
+ 
+ 
+
+>>>>>> (iii)
+Find the details of all users who have at least one friend and have more than 5 posts.
+------------------------------------------------------------------
+
+
+
+
+
+
+
+

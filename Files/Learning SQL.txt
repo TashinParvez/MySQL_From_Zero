@@ -789,6 +789,7 @@ LIMIT
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Having 
 
 --> If you want to filter after creating Group.
+--> USED for Group filter ***
 
 /*
 
@@ -848,6 +849,159 @@ ORDER BY department_id;
 
 
 
+
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Join Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+1. Join / Inner Join / Cross Join
+2. Left Join / Left Outer Join
+
+
+why Join?
+- if have primary and foreign key then can do Join operation
+- Max 61 table's can join
+
+
+
+Table Alising
+--------------------------------------
+SELECT T1.name , 
+FROM table_name as T1 , table_name2 AS 'child of T1'   ///----> if have space then in invated choma(as string), else as usual
+
+all column ----> *
+T1 table, all column ----> T1.*
+
+
+
+---------------------------------------------------------
+
+ROW filter - WHERE
+Group filter -  HAVING
+
+Table Join  - On condition
+
+---------------------------------------------------------
+
+JOIN condition :  T1.Coll1 = T2.Coll2    ///---> How many rows will be created in resultant table depends on this condition
+
+
+
+------------------------- Join / Inner Join / Cross Join --------------------------------
+
+SELECT .......
+
+FROM table_1 AS t1
+
+      Join
+      table_2 AS t2
+      ON [JOIN_Condition]
+      
+      Join
+      table_3 AS t3
+      ON [JOIN_Condition]
+      .
+      .
+      .
+      .
+      Join
+      table_4 AS t4
+      ON [JOIN_Condition]
+      
+
+WHERE
+
+
+
+------------------------- Left Join / Left Outer Join --------------------------------
+
+
+SELECT .......
+
+FROM table_1 AS t1            /// Left table  [ALL DATA will must come in the resultant Table]
+
+      Join
+      table_2 AS t2           /// Right Table
+      ON [JOIN_Condition]
+      
+      LEFT JOIN
+      table_3 AS t3
+      ON [JOIN_Condition]
+      .
+      .
+      .
+      .
+      Join
+      table_4 AS t4
+      ON [JOIN_Condition]
+      
+
+WHERE
+
+
+
+
+------------------------- RIGHT Join --------------------------------
+
+SELECT .......
+
+FROM table_1 AS t1            /// Left table  
+
+      Join
+      table_2 AS t2           /// Right Table [ALL DATA will must come in the resultant Table]
+      ON [JOIN_Condition]
+
+WHERE
+
+
+
+
+# Example 1:
+-------------------------------
+SELECT  emp.first_name , 
+		jobs.job_title, 
+		dept.department_name,
+        loc.city
+
+FROM  employees as emp
+		JOIN 
+        jobs
+        ON emp.job_id = jobs.job_id
+       
+        JOIN
+        departments AS dept
+        ON emp.department_id = dept.department_id
+        
+        JOIN 
+        locations AS loc 
+        ON dept.location_id = loc.location_id 
+       
+
+
+
+
+
+
+------------------------- SELF Join  (Important)--------------------------------
+
+
+# Example 1:
+-------------------------------
+SELECT emp.employee_id,
+		emp.first_name,
+        manag.manager_id,
+        manag.first_name
+
+FROM employees AS emp 
+    	JOIN 
+        employees AS manag 
+        ON  emp.manager_id = manag.employee_id
 
 
 
