@@ -1,0 +1,58 @@
+
+
+------------------------------------------------------------------
+----------------------   Question No 3   -------------------------
+------------------------------------------------------------------
+
+
+
+>>>>>>>>>>>> (i) <<<<<<<<<<
+Change the primary key of the orders table and declare order_id, customer_id 
+and project_id together as a primary key
+------------------------------------------------------------------
+ALTER TABLE Orders
+DROP PRIMARY KEY;
+
+ALTER TABLE Orders
+ADD PRIMARY KEY(order_id, customer_id, project_id)
+
+
+
+    
+>>>>>>>>>   (ii)   <<<<<<<<<<
+Find out the project names where the duration of the project is not more than a year
+------------------------------------------------------------------
+SELECT name
+FROM Projects
+WHERE YEAR(end_date)-YEAR(start_date) <=1
+
+OR
+
+WHERE DATEDIFF(end_date, start_date) <= 365;
+
+
+
+
+
+    
+>>>>>>>>>   (iii)   <<<<<<<<<<
+Find out the Employee names of those employees who aged less than the 
+average age of all employees for each department.
+------------------------------------------------------------------
+
+SELECT name
+FROM
+GROUP BY department_id
+WHERE age< AVG(age)
+
+
+
+
+
+
+
+
+
+
+
+
