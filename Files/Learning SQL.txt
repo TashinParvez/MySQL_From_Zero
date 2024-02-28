@@ -411,7 +411,7 @@ SELECT [coll_name]
 FROM [table_name]
 # where salary >=1000 AND salary<=10000  ------> OLD APPROACH
 
-WHERE salary BETWEEN 1000 AND 10000      ------> two values are included
+WHERE salary BETWEEN 1000 AND 10000      ------> two values are (** included **)
 
 
 
@@ -442,9 +442,10 @@ WHERE manager_id IN(101, 201, 301)     ------>  equal (equal check for few Value
 WHERE manager_id NOT IN(101, 201, 301)     ------>  not equal
 
 
-
-
------------------------ LIKE (String pattern Match) ---------------------------------------------
+--------------------------------------------------------------------------------------------
+-------------....----------       String Operations      -----------------------------------
+------------....----------- LIKE (String pattern Match) ------------------------------------
+--------------------------------------------------------------------------------------------
 
 %  (percentage) : 0 to inf Char (as start operation on TOC)
 _ (underscore)  : exactaly one char
@@ -452,17 +453,17 @@ _ (underscore)  : exactaly one char
 
 SELECT [coll_name]
 FROM [table_name]
-WHERE [coll_name] LIKE "want_to_match"
+WHERE [coll_name] LIKE "want_to_match"           ///----->>  (LIKE)  Operation
 
 
 /* 
        SELECT *
        FROM employees
-       WHERE last_name LIKE "%g";
+       WHERE last_name LIKE "%g";              ///----> LAst name ends with 'g'
 */
 
 
------------------------ Boolean ---------------------------------------------
+--------------------------------- Boolean ---------------------------------------------
 
 
 SELECT [coll_name]
@@ -695,8 +696,102 @@ From customer;
 
 
 
-                      Aggregat, Join
-Basic -------------------------------------------> Advanced
+
+-----------------------------------------------------------------------
+----------------------------- UNION -----------------------------------
+-----------------------------------------------------------------------
+
+
+Example: 1
+--------------------------------------
+(
+       SELECT first_name, manager_id
+       FROM employees
+       WHERE manager_id = 100
+)      UNION
+(
+       SELECT first_name, manager_id
+       FROM employees
+       WHERE manager_id = 114
+);
+
+
+
+-----------------------------------------------------------------------
+--------------------------- INTERSECT ---------------------------------
+-----------------------------------------------------------------------
+
+
+Example: 1
+--------------------------------------
+
+(
+       SELECT first_name, manager_id, salary
+       FROM employees
+       WHERE manager_id = 100
+)      INTERSECT                                   ///----> (A intersection B)
+(
+       SELECT first_name, manager_id, salary
+       FROM employees
+       WHERE salary>5000
+);
+
+
+
+-----------------------------------------------------------------------
+--------------------------- except ---------------------------------
+-----------------------------------------------------------------------
+
+
+Example: 1
+--------------------------------------
+(
+       SELECT first_name, manager_id, salary
+       FROM employees
+       WHERE manager_id = 100
+)      except                                       ///----> (A-B)
+(
+       SELECT first_name, manager_id, salary
+       FROM employees
+       WHERE salary>5000
+);
+
+
+
+
+
+
+
+                                        -------------------------------------------------------------------------
+                                                                  Aggregat, Join
+                                                  ------------------------------------------->  
+                                         (Basic)    ------------------------------------------->    (Advanced)
+                                                  ------------------------------------------->  
+                                        
+                                        -------------------------------------------------------------------------
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Aggregate Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+--> SELECT groupFunc(Coll_1)    /// menas it will aply on whol column
+
+
+Aggregate Function
+-------------------
+MAX(Coll_1)   , MAX(DISTINCT Coll_1) 
+MIN(Coll_1)   , MIN(DISTINCT Coll_1) 
+SUM(Coll_1)   , SUM(Coll_1) 
+AVG(Coll_1)   , AVG(Coll_1)  
+COUNT(Coll_1) , COUNT(Coll_1) , COUNT(*) 
+
+
+///  COUNT(*) ---> to solve Null not count problem, count(*) will take full row as a input and NULL will not create problem
 
 
 
@@ -711,42 +806,20 @@ LIMIT
 */
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Aggregate Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+SELECT MAX(Coll_1), MIN(Coll_1), COUNT(Coll_1), SUM(Coll_1) , AVG(Coll_1) 
 
 
---> SELECT groupFunc(Coll_1)    /// menas it will aply on whol column
-
-
-Aggregate Function
--------------------
-MAX(Coll_1)   , MAX(DISTINCT Coll_1) 
-MIN(Coll_1)   , MIN(DISTINCT Coll_1)
-SUM(Coll_1)   , SUM(Coll_1) 
-AVG(Coll_1)   , AVG(Coll_1)  
-COUNT(Coll_1) , COUNT(Coll_1) , COUNT(*)
-
-
-///  COUNT(*) ---> to solve Null not count problem, count(*) will take full row as a input and NULL will not create problem
-
-
-
-
-
-SELECT MAX(Coll_1), MIN(Coll_1), COUNT(Coll_1), SUM(Coll_1) , AVG(Coll_1)
-
-
----> Output: No of Rows == Num of Groups 
-
----> default : Full table 1 group (So output one Row)
+---> Output: No of Rows == Num of Groups  
+ 
+---> default : Full table 1 group (So output one Row) 
 
 
 
 
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>    Creating Group      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      Creating Group      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
 
