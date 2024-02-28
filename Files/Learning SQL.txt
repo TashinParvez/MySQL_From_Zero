@@ -1083,14 +1083,93 @@ FROM employees AS emp
 
 
 
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   SubQuery  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+
+-> select query within other query
+-> Inner and Outer Query
+-> Inner query select (always)
+   Outer query delete, update, Insert (Can change)
+-> Subquery always write in a first bracket
+-> Inner Query execute first
+
+
+
+                                                     ------------------------------------------
+                                                     ----- Variation 1: Scalar Subquery -------
+                                                     ------------------------------------------
+
+- Return Constant Value (one cell)
+- Where I can write constant ther I can write Scalar_Subquery
+
+
+
+SELECT    coll_name, (Scalar_Subquery)
+FROM      ...
+WHERE     conditon > (Scalar_Subquery)
+GROUP BY  ...
+HAVING    SUM() > (Scalar_Subquery)                
+
+
+
+EXAMPLE 1:
+----------------------
+# Show all those employee details who works in the same dept as emoployee id 110.
+
+SELECT *
+FROM employees
+WHERE department_id = (
+       SELECT department_id
+       FROM employees
+       WHERE employee_id = 110
+);
 
 
 
 
 
 
+EXAMPLE 2:
+----------------------
+
+# Shows all those emoployee details 
+# whose manager and (employee id 120 manager) are same and 
+# Whose dept id is also same as emoployee id 130 
+
+SELECT *
+FROM employees
+WHERE manager_id = (
+	SELECT manager_id
+    FROM employees
+    WHERE employee_id = 120
+) 
+AND
+department_id = (
+    SELECT department_id
+    FROM employees
+    WHERE employee_id = 130
+);
 
 
+
+
+
+
+Example 3: 
+-----------------------
+# Show all those employee details 
+# who receives higher salary than the avg salary provided bt department id 90
+
+SELECT *
+FROM employees
+WHERE salary > (
+    SELECT AVG(salary)
+    FROM employees
+    WHERE department_id = 90
+)
 
 
 
