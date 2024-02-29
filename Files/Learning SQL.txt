@@ -1,4 +1,14 @@
 
+//                         ╔═══════════════════════════════════════════════════════════════════════════════════════════╗
+//                         ║                                                                                           ║
+//                         ║                                Author: Tashin Parvez                                      ║
+//                         ║                            United International University                                ║
+//                         ║                                                                                           ║
+//                         ╚═══════════════════════════════════════════════════════════════════════════════════════════╝
+
+
+
+
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   DDL  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
@@ -1098,9 +1108,9 @@ FROM employees AS emp
 
 
 
-                                                     ------------------------------------------
-                                                     ----- Variation 1: Scalar Subquery -------
-                                                     ------------------------------------------
+                                                     -------------------------------------------
+                                                     ------ Variation 1: Scalar Subquery -------
+                                                     -------------------------------------------
 
 - Return Constant Value (one cell)
 - Where I can write constant ther I can write Scalar_Subquery
@@ -1170,6 +1180,262 @@ WHERE salary > (
     FROM employees
     WHERE department_id = 90
 )
+
+
+
+
+
+
+
+
+                                      -------------------------------------------
+                                      ------ Variation 2: Column Subquery -------
+                                      -------------------------------------------
+
+-> Inner Query Return 1 COll (Multiple rows/values)
+   [it could be a list or tupple]
+
+-> ANY, ALL , IN, SOME 
+-> ANY = SOME = IN
+
+
+--> value > ANY (10, 20, 30)        ///--->   if one is true then true
+--> value > ALL (10, 20, 30)       ///--->   if ALL true then true
+
+
+
+Example: 1
+-------------------
+SELECT *
+FROM employees
+WHERE salary > ANY (
+    SELECT salary
+    FROM employees
+    WHERE department_id = 100
+)
+AND department_id = 100;
+
+
+
+
+Example: 2
+-------------------
+SELECT *
+FROM employees
+WHERE salary > ANY (
+    SELECT MAX(salary)
+    FROM employees
+    GROUP BY department_id
+)
+
+
+Example: 3
+-------------------
+SELECT *
+FROM employees AS e  
+WHERE job_id !='IT_PROG' AND
+	salary < any (
+    	SELECT salary
+    	FROM employees
+        WHERE job_id = 'IT_PROG'
+    )
+
+
+
+
+
+
+                                      -------------------------------------------
+                                      -------- Variation 3: ROW Subquery --------
+                                      -------------------------------------------
+
+
+
+-> Inner Query Return 1 ROW (Multiple COLUMN)  
+
+
+
+Example: 1
+---------------------------------------------
+
+# Show all those emoployeE DETAILS 
+# who works in the same dept as employee id 110 and
+# also who receives the same salary of employee id 110          ///--->   checking 2(multiple) value with the one particular person  
+
+
+
+///----------( Solve using collumn subquery )---------------
+
+SELECT *
+FROM employees
+WHERE department_id = (
+    SELECT department_id
+    FROM employees
+    WHERE employee_id = 110
+) AND
+salary = (
+    	SELECT salary
+        FROM employees
+        WHERE employee_id = 110
+)
+
+
+///----------( Solve using row subquery )---------------
+
+SELECT *
+FROM employees
+WHERE (department_id, salary) = (
+    	SELECT department_id, salary  # one row           ///--->> order should be maintained
+        FROM employees
+        WHERE employee_id = 110 
+);
+
+
+
+
+
+
+
+
+                                      -------------------------------------------
+                                      -------- Variation 4: Derived table -------
+                                      -------------------------------------------
+
+-> Inner query returns a table (have multiple table, multiple columns)
+    | -> requared table = temporary table
+    | -> Table aliasing must
+
+
+
+
+
+Example : 1
+----------------
+
+# Show the manager id who manage minimum num of employee
+
+SELECT manager_id, min(Mt.empCount)
+FROM (
+    SELECT manager_id, COUNT(employee_id) AS empCount
+    FROM employees
+    GROUP BY manager_id
+) AS Mt
+
+WHERE manager_id IS NOT NULL
+
+
+
+Example : 2
+----------------
+# Show the dept name who spend min salary for therir employee
+
+SELECT department_id, MIN(totalSalary)
+FROM (
+    SELECT department_id, SUM(salary) as totalSalary
+    FROM employees
+    GROUP BY department_id 
+)AS dt;
+
+
+
+
+
+** Example : 3 **
+----------------
+# for each year, find out minimum number of employee hired by a department
+
+SELECT year, department_id, MIN(totalEmp) AS emp_hire
+FROM(
+    SELECT COUNT(employee_id) as totalEmp, YEAR(hire_date) AS year, department_id
+    FROM employees
+    GROUP BY YEAR(hire_date), department_id
+    ) AS nt
+GROUP BY nt.year
+ORDER BY year;
+
+
+
+
+
+** Example : 4 ** 
+----------------
+# for each employee, show emp_id , total no of emp hired after him and total no of emp hired before him
+
+SELECT   af.id AS emp_id, 
+         af.cnt AS after_JOIN, 
+         bf.cnt AS before_JOIN 
+
+FROM (
+       SELECT myself.employee_id as id, COUNT(*) as cnt
+       FROM employees as myself 
+	       CROSS JOIN
+              employees AS col
+              ON myself.hire_date < col.hire_date 
+       GROUP BY myself.employee_id
+       ) AS af
+
+       INNER JOIN(
+       SELECT myself.employee_id as id, COUNT(*) as cnt
+       FROM employees as myself
+           	CROSS JOIN
+              employees AS col 
+              ON myself.hire_date > col.hire_date
+       GROUP BY myself.employee_id
+       ) AS bf
+
+       ON af.id = bf.id
+
+ORDER BY af.id;
+
+
+
+
+
+
+
+                                      -------------------------------------------
+                                      ------ Variation 5: Corelated Subquery -----
+                                      -------------------------------------------
+
+-> Corelated means Dependent
+-> Inner query references/depends on Outer query table
+
+||  one value match check in outer query
+||  another one check in Inner query
+||
+||
+
+
+
+Example 1 **
+------------------------------------------
+
+# show the emp info
+# who is having max salary of that department 
+
+//----------------------- USING Row SubQuery
+SELECT *
+FROM employees
+WHERE (salary, department_id) in (
+    SELECT max(salary), department_id
+	FROM employees
+	GROUP BY department_id
+);
+
+//----------------------- USING Corelated SubQuery
+
+SELECT *
+FROM employees as e 
+WHERE salary in (
+    SELECT MAX(salary)
+	FROM employees as d 
+	WHERE e.department_id = d.department_id
+    GROUP by department_id
+);
+
+
+
+
 
 
 
