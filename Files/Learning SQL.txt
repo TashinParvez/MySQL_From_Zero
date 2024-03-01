@@ -473,6 +473,8 @@ WHERE [coll_name] LIKE "want_to_match"           ///----->>  (LIKE)  Operation
 */
 
 
+LENGTH(coll1)   ///--------> Know string length 
+
 --------------------------------- Boolean ---------------------------------------------
 
 
@@ -529,7 +531,7 @@ ROUND(x)/Round(x,D) ------> SELECT ROUND([coll_name])
 Example: 
 SELECT ROUND(1.34)         ---> 1
 SELECT ROUND(1.34, 1)      ---> 1.3
-SELECT ROUND(1.45, 1)      ---> 1.5
+SELECT ROUND(1.45678, 3)   ---> 1.457       ///--->  ROUND decimal Value
 
 
 
