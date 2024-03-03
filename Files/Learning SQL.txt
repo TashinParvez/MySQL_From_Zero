@@ -177,6 +177,13 @@ VALUES (coll1_val, coll2_val,  coll3_val, coll4_val), (coll1_val, coll2_val,  co
 
 
 
+
+///
+/// In SQL, you cannot refer to a column alias defined in the SELECT clause in the WHERE clause directly. 
+/// You either need to repeat the expression in the WHERE clause or use a subquery or a common table expression (CTE) to calculate the alias.
+///
+
+
 ----------------- DATA UPDATE TABLE ----------------- ************************
 
 UPDATE [table_name]
@@ -228,7 +235,7 @@ FROM [table_name]
 
 
 
-********************** READ Few Column (COLUMN Filter / Show specific COLUMN)
+********************** READ Few Column (COLUMN Filter / Show specific COLUMN) **********************
 
 SELET coll_1, 
       coll_2
@@ -240,7 +247,31 @@ Only coll1 and coll2 will be show
 */
 
 
-********************** Column aliasing (COLUMN Renaming / Do Calculation in COLUMN)
+
+
+********************** "CAST" convert an expression from one data type to another. **********************
+
+FORMATE:  CAST(expression AS data_type)
+                    ||            ||          
+                    ||            ||-->  data_type: The target data type        
+                    ||-->  expression: The value or column you want to convert
+
+
+--- VARCHAR TO INT ---
+SELECT CAST('123' AS INT);
+
+
+--- VARCHAR TO DATE ---
+SELECT CAST('2022-01-01' AS DATE);
+
+
+
+
+
+
+
+
+********************** Column aliasing (COLUMN Renaming / Do Calculation in COLUMN)  **********************
 
 ---->>  Can USE alicasing: GROUP BY, HAVING, ORDER USE
 
@@ -361,9 +392,10 @@ FROM [table_Name]
 
 
 
-****************** Showing LIMITED NUMBER OF rows (lIMIT Operation) ******************
+************************* Showing LIMITED NUMBER OF rows (lIMIT Operation) ***************************
 
------- Way 1
+---------------- Way 1 ----------------
+
 SELECT DISTINCT [coll_name]
 FROM [table_name]
 where [condition]
@@ -372,37 +404,65 @@ LIMIT [show];  -----------------------> Show top 3
 
 
 
-//*  Example: 
+//////////*  Example 01:  *\\\\\\\\\
      
 SELECT DISTINCT salary
 FROM employees
-
 ORDER BY salary desc
-LIMIT  3;
-*//
+
+LIMIT  3;       /// -----------------------> Limit means how many rows you want to see
 
 
----------------- Way 2
+
+---------------- Way 2 ----------------
 
 SELECT DISTINCT [coll_name]
 FROM [table_name]
 ORDER BY [coll_name] DESC
-LIMIT [offset/drop/index_included], [show]; ----------> 
-     
-/// Offset optional [no optional means way 1]
-/// Index start from 0(zero)
+LIMIT [num_rows_to_show]
+
+OFFSET  [num_rows_to_skip];    ///--------------->  Offset means how many rows you want to skip for the top [ it doesnt effect on limit]
 
 
 
-//*  Example: 
+---------------- Way 3 ----------------
+
+//*  Example 02: 
      
 SELECT DISTINCT salary
-FROM employees
+FROM employees 
 
 ORDER BY salary desc
-LIMIT  1, 5; ---------------> 
+LIMIT  10, 5; --------------->  LIMIT 10, 5 means that the query should skip the first 10 rows and then return 5 row after that.
     
 *//
+
+====================     GOOD EXAMPLE      ====================
+
+SELECT DISTINCT salary 
+FROM employees
+ORDER BY salary DESC
+LIMIT 10        ---------------->  GIVE you top 10 (1,2,3,4,5,6,7,8,9,10)
+
+
+SELECT DISTINCT salary
+FROM employees
+ORDER BY salary DESC
+LIMIT  5
+OFFSET 5;       ---------------->  GIVE you top 6 to 10 (6,7,8,9,10) 
+
+
+//
+//  MEANS OFFSET skips rows,
+//  But it doesnt effect on limit
+//  Limit means how many rows you want to see
+//  Offset means how many rows you want to skip for the top
+//  
+
+
+
+
+
 
 
 
@@ -548,13 +608,22 @@ SELECT TRUNCATE(1.45, 1)      ---> 1.4
 
 ----------------------- String Functions ---------------------------
 
+LENGTH()  
 UPPER()  
 LOWER()
-REVERSE()
+REVERSE()       
+CONCATE()  ----> concatenation of string  [CONCAT(string1, string2, ...)]
 
-CONCATE()  ----> concatenation of string 
+SUBSTRING(string, start_position, length)          SUBSTRING or SUBSTR: Extracts a substring from a string.
 
-Example: CONCAT(first_name,' ', last_name) AS full_Name
+
+TRIM(string)  TRIM: Removes leading and trailing spaces from a string.
+
+
+
+
+
+Example of concatenation: CONCAT(first_name,' ', last_name) AS full_Name
 
 
 /// bIG Example
@@ -607,12 +676,15 @@ RIGHT(str,len)           ------> RIGHT('abcd', 2) => cd
 LPAD(str, len, padstr)    
 
 /// SELECT LPAD('abcd', 8, 'xyz') 
-/// -- Output: xyzxabcd  
-///            ----
+/// -- Output: xyzxabcd
+
+
+/// SELECT LPAD('abcd', 8, '*') 
+/// -- Output: ****abcd   
 
 
 
-RPAD(str, len, padstr)
+RPAD(str, len, padstr) 
 
 /// SELECT RPAD('abcd',6,'x')
 /// -- Output:  abcdxx
@@ -648,7 +720,7 @@ ORDER BY salary ASC;
 -----------------------------------------------------------------------
 
 
-NOW()             -----------> returns the current datetime
+NOW()             -----------> returns the current date with time
 CURDATE()         -----------> returns the current date
 CURTIME()         -----------> returns the current time
 
@@ -667,7 +739,7 @@ YEAR(datetime)      --------------> only year part
 
 
 DATEDIFF(datetime1, datetime2)    ------------>  Return number of days
-TIMEDIFF(datetime1, datetime2)    ------------>  Return time diff
+TIMEDIFF(datetime1, datetime2)    ------------>  Return time diff 
 
 
 
