@@ -16,8 +16,9 @@
 
 -----------------------  Create DATABASE  --------------------
 
-WAY 1: CREATE DATAB ASE [database_Name];
+WAY 1: CREATE DATABASE [database_Name];
        -> SHOW ERROR IF DATABASE exist
+
 WAY 2: CREATE DATABASE IF NOT EXISTS [database_Name];
        -> Don't SHOW ERROR IF DATABASE exist
 
@@ -67,13 +68,13 @@ CREATE TABLE IF NOT EXISTS [table_name](
 
 -----------------------  DELETE TABLE  ----------------------
  
-WAY 1: DROP TABLE [table_Name];
-       -> SHOW ERROR
-WAY 2: DROP TABLE IF EXISTS [table_Name];  -- Don't SHOW ERROR (Just give a warning)
+WAY 1: DROP TABLE [table_Name];            --> SHOW ERROR
+
+WAY 2: DROP TABLE IF EXISTS [table_Name];  --> Don't SHOW ERROR (Just give a warning)
 
 
 
------------------------  Shortcuts  ----------------------
+-----------------------  Shortcuts to Run MySQL Code  ----------------------
 
 1. ctrl + Enter  ---->  Go Click
 
@@ -94,7 +95,7 @@ ALTER TABLE [table_Name] ADD PRIMARY KEY( Attribute_1 )    /// Single key
 
 ALTER TABLE [table_Name] ADD PRIMARY KEY ( Attribute_1, Attribute_2 )   /// Composite Key
 
-ALTER TABLE [table_Name] DROP PRIMARY KEY
+ALTER TABLE [table_Name] DROP PRIMARY KEY 
 
 
 
@@ -131,12 +132,14 @@ ALTER TABLE [table_Name] MODIFY COLUMN [coll_Name] [new_DATA_type]
 
 
 
------------------ RENAME TABLE Name -----------------
+------------------------------- RENAME TABLE Name ------------------------------
 
 ALTER TABLE [table_Name] RENAME [table_Name]
 
 
------------------ Comment -----------------
+
+---------------------------------- Comment ----------------------------------
+
 #        This is single line comment
 
 
@@ -144,7 +147,7 @@ ALTER TABLE [table_Name] RENAME [table_Name]
              is 
           multiple
             line 
-           comment                
+           comment   
 */
 
 
@@ -190,8 +193,9 @@ UPDATE [table_name]
 SET coll1 = value1 , coll2 = value2, ....
 WHERE [condition];
 
----- IF you dont write WHERE then every row's data will be update
----- 
+----> IF you dont write WHERE then every row's data will be update 
+
+
 
 /*
    Condition will be on column
@@ -215,22 +219,25 @@ WHERE [condition];
 
 
 
+**********************************************************************************************************************************
+     **************************************** DATA Search INTO TABLE ******************************************
+**********************************************************************************************************************************
 
-************************************************ DATA Search INTO TABLE ************************************************
 /*
-    Temporary view of the table (NO EFFECT ON TABLE / NO DATA LOSS)
+    Temporary view of the table (NO EFFECT ON TABLE / NO DATA LOSS) 
 */
 
-************************ Read Full DATABASE
+************************ Read Full DATABASE ************************
 SELECT *
 FROM [table_name]
+
 
 /*
    * = all column
    default = all row (WERE IS NOT GIVEN)
 */
 
---- Try to READ less as much as you can
+---> Try to READ less as much as you can
 
 
 
@@ -251,21 +258,24 @@ Only coll1 and coll2 will be show
 
 ********************** "CAST" convert an expression from one data type to another. **********************
 
-FORMATE:  CAST(expression AS data_type)
+FORMATE:  CAST( expression AS data_type ) 
+                |_________|   |________|
                     ||            ||          
                     ||            ||-->  data_type: The target data type        
+                    ||                 
                     ||-->  expression: The value or column you want to convert
 
 
---- VARCHAR TO INT ---
-SELECT CAST('123' AS INT);
 
-
---- VARCHAR TO DATE ---
-SELECT CAST('2022-01-01' AS DATE);
+-------------------------------
+ ------ VARCHAR TO INT ------>>              SELECT CAST('123' AS INT);
+-------------------------------
 
 
 
+-------------------------------
+ ------ VARCHAR TO DATE ------>>             SELECT CAST('2022-01-01' AS DATE);
+-------------------------------
 
 
 
@@ -291,7 +301,7 @@ column names will be  coll_1 + coll_4,  coll_2 / coll_5
 */
 
 
-SELET coll_1 + coll_4 AS new_Coll_name_1, 
+SELET coll_1 + coll_4 AS new_Coll_name_1,        //------>> GIVE New Name
       coll_2 / coll_5 AS new_coll_name_2
 FROM [table_Name]
 
@@ -314,6 +324,9 @@ FROM employees;
 
 
 
+
+
+
 ************* ROW Filtering (Showing specific row)  *************************
 
 SELECT coll_1, coll_2
@@ -322,20 +335,21 @@ WHERE [condition]
 
 
 /*
-  MySQL 
+  MySQL -- Operations
   ------------------------
   and operation:  AND, &&
-  or Operation: OR, ||
-  not Operation: NOT, !
+  or Operation:   OR, ||
+  not Operation:  NOT, !
 
-  ------------------------
+  ------------------------ 
   DESC --> Big to small
   ASC  --> small to Big
 */
 
 
 /*
-   Condition will be on column
+   Condition will be on column 
+
    Examples of Condition:
    CGPA < 3.35
    id IS NOT NULL
@@ -357,7 +371,9 @@ ORDER BY coll_name [ASC|DESC], coll_name [ASC|DESC] , .........
 
 
 /*
-SELECT first_name,
+Example: 
+
+SELECT  first_name,
 		email,
         salary,
         2024 - YEAR(hire_date) AS experience
@@ -369,7 +385,8 @@ ORDER BY (2024 - YEAR(hire_date)) DESC
 
 
 
-****************** Showing distinct rows/data ******************
+
+************************* Showing distinct rows/data *************************
 
 SELECT DISTINCT [coll1_name]
 FROM [table_Name]
@@ -392,7 +409,21 @@ FROM [table_Name]
 
 
 
-************************* Showing LIMITED NUMBER OF rows (lIMIT Operation) ***************************
+
+______________________________________________________________________________________________
+______|   _       _             _  _                ____    __   __             _      |______
+______|  | |     (_)           (_)| |       _      / __ \  / _| / _|           | |     |______
+______|  | |      _  _ __ ___   _ | |_    _| |_   | |  | || |_ | |_  ___   ___ | |_    |______
+______|  | |     | || '_ ` _ \ | || __|  |_   _|  | |  | ||  _||  _|/ __| / _ \| __|   |______
+______|  | |____ | || | | | | || || |_     |_|    | |__| || |  | |  \__ \|  __/| |_    |______
+______|  |______||_||_| |_| |_||_| \__|            \____/ |_|  |_|  |___/ \___| \__|   |______
+______|                                                                                |______
+______________________________________________________________________________________________
+
+********************* Showing LIMITED NUMBER OF rows (lIMIT Operation) ***********************
+
+
+
 
 ---------------- Way 1 ----------------
 
@@ -400,7 +431,9 @@ SELECT DISTINCT [coll_name]
 FROM [table_name]
 where [condition]
 ORDER BY [coll_name] DESC
+
 LIMIT [show];  -----------------------> Show top 3
+
 
 
 
@@ -431,23 +464,26 @@ OFFSET  [num_rows_to_skip];    ///--------------->  Offset means how many rows y
      
 SELECT DISTINCT salary
 FROM employees 
-
 ORDER BY salary desc
+
 LIMIT  10, 5; --------------->  LIMIT 10, 5 means that the query should skip the first 10 rows and then return 5 row after that.
     
 *//
 
-====================     GOOD EXAMPLE      ====================
+====================     GOOD EXAMPLE OF LIMIT and OFFSET     ====================
 
 SELECT DISTINCT salary 
 FROM employees
 ORDER BY salary DESC
+
 LIMIT 10        ---------------->  GIVE you top 10 (1,2,3,4,5,6,7,8,9,10)
+
 
 
 SELECT DISTINCT salary
 FROM employees
 ORDER BY salary DESC
+
 LIMIT  5
 OFFSET 5;       ---------------->  GIVE you top 6 to 10 (6,7,8,9,10) 
 
@@ -464,18 +500,28 @@ OFFSET 5;       ---------------->  GIVE you top 6 to 10 (6,7,8,9,10)
 
 
 
+______________________________________________________________________________________
+---------------|                                                      |----------------
+---------------|  __      __        _       _   _                     |----------------
+---------------|  \ \    / /       (_)     | | (_)                    |----------------
+---------------|   \ \  / /_ _ _ __ _  __ _| |_ _  ___  _ __  ___     |----------------
+---------------|    \ \/ / _` | '__| |/ _` | __| |/ _ \| '_ \/ __|    |----------------
+---------------|     \  / (_| | |  | | (_| | |_| | (_) | | | \__ \    |----------------
+---------------|      \/ \__,_|_|  |_|\__,_|\__|_|\___/|_| |_|___/    |---------------- 
+---------------|                                                      |----------------
+---------------|                                                      |----------------
+______________________________________________________________________________________
+
+*********************************** Variations ****************************************
 
 
-
-****************** Variations ******************
-
---------- Div: 
+--------- Div: ---------
 
 10 DIV 4 = 2    (Integer)
 10 / 4   = 2.5  (Float)
 
 
---------- Between...AND:
+--------- Between...AND: ---------
 
 SELECT [coll_name]
 FROM [table_name]
@@ -485,18 +531,18 @@ WHERE salary BETWEEN 1000 AND 10000      ------> two values are (** included **)
 
 
 
---------- NOT Between...AND:
+--------- NOT Between...AND: ---------
 
 SELECT [coll_name]
 FROM [table_name]
 # where salary < 1000 AND salary > 10000  ------> OLD APPROACH
 
-WHERE salary NOT BETWEEN 1000 AND 10000      ------> two values are excluded
+WHERE salary NOT BETWEEN 1000 AND 10000      ------> two values are (**excluded**)
 
 
 
 
---------- IN :
+--------- IN :(For few values) ---------
 
 SELECT [coll_name]
 FROM [table_name]
@@ -512,10 +558,34 @@ WHERE manager_id IN(101, 201, 301)     ------>  equal (equal check for few Value
 WHERE manager_id NOT IN(101, 201, 301)     ------>  not equal
 
 
---------------------------------------------------------------------------------------------
+
+
+
+
+
+
+__________________________________________________________________________________________________
+__________________________________________________________________________________________________
+   _____  _          _                  ____                            _    _               
+  / ____|| |        (_)                / __ \                          | |  (_)              
+ | (___  | |_  _ __  _  _ __    __ _  | |  | | _ __    ___  _ __  __ _ | |_  _   ___   _ __  
+  \___ \ | __|| '__|| || '_ \  / _` | | |  | || '_ \  / _ \| '__|/ _` || __|| | / _ \ | '_ \ 
+  ____) || |_ | |   | || | | || (_| | | |__| || |_) ||  __/| |  | (_| || |_ | || (_) || | | |
+ |_____/  \__||_|   |_||_| |_| \__, |  \____/ | .__/  \___||_|   \__,_| \__||_| \___/ |_| |_|
+                                __/ |         | |                                            
+                               |___/          |_|                                            
+__________________________________________________________________________________________________
+__________________________________________________________________________________________________
+
 -------------....----------       String Operations      -----------------------------------
+
+
+
+
+--------------------------------------------------------------------------------------------
 ------------....----------- LIKE (String pattern Match) ------------------------------------
 --------------------------------------------------------------------------------------------
+
 
 %  (percentage) : 0 to inf Char (as start operation on TOC)
 _ (underscore)  : exactaly one char
@@ -533,7 +603,107 @@ WHERE [coll_name] LIKE "want_to_match"           ///----->>  (LIKE)  Operation
 */
 
 
-LENGTH(coll1)   ///--------> Know string length 
+
+
+
+
+----------------------- String Functions ---------------------------
+
+1. LENGTH()  
+2. UPPER()  
+3. LOWER()
+4. REVERSE()       
+
+5. CONCATE()  ----> concatenation of string  [CONCAT(string1, string2, ...)]
+
+6. SUBSTRING(string, start_position, length) ----->      SUBSTRING or SUBSTR: Extracts a substring from a string.
+
+7. TRIM(string)  ---->  TRIM: Removes leading and trailing spaces from a string.
+
+
+
+//--> Example of concatenation:   CONCAT(first_name,' ', last_name) AS full_Name
+
+
+
+/// BIG Example \\\
+
+SELECT  employee_id,
+        first_name, 
+        CASE 
+            WHEN salary>=1000 THEN
+                CONCAT(
+                    salary DIV 1000,' Thousands ',
+                    (salary%1000) DIV 100, ' Hundreds ',
+                    salary % 100, ' Taka'
+                    )
+            WHEN salary>=100  THEN
+                CONCAT(
+                    (salary) DIV 100, ' Hundreds ',
+                    salary % 100, ' Taka'
+                    )	
+            ELSE
+                CONCAT( 
+                    salary % 100, ' Taka'
+                    )	
+        END AS AMOUNT, 
+        salary*12 AS 'Yearly SALARY' 
+
+FROM employees
+ORDER BY salary ASC;
+
+
+
+
+
+
+8. SUBSTR(str,pos)      ------> SUBSTR(first_name , 3)   [3rd position included] 
+                        ------> output(first_name's 3rd index to last)
+                        ------> String index count from 1
+
+
+
+8.1. SUBSTR(str,pos,len)      ------> SUBSTR(first_name , 3, 4)   [From 3rd position and Take 4 index, index start from 1]
+
+
+9.  LEFT(str, len)           ------> LEFT('abcd', 2) => ab
+10. RIGHT(str,len)           ------> RIGHT('abcd', 2) => cd
+
+
+
+
+----------- LPAD ----------- (Increase string Length From Left)
+
+11. LPAD(str, len, padstr)    
+
+
+/// SELECT LPAD('abcd', 8, 'xyz')       -->>  Output: xyzxabcd
+/// SELECT LPAD('abcd', 8, '*')         -->>  Output: ****abcd   
+
+
+----------- RPAD ----------- (Increase string Length From Right)
+
+12. RPAD(str, len, padstr) 
+
+/// SELECT RPAD('abcd',6,'x')           -->>  Output:  abcdxx
+
+
+
+
+/**** GOOD EXAMPLE ***\
+
+SELECT employee_id,
+		LOWER( CONCAT( SUBSTR(first_name,1,2), '_',  RIGHT(last_name,2)) ) AS Code_NAME
+
+FROM employees
+ORDER BY salary ASC; 
+
+
+//----------------------> MORE WORK ( COUNT THER TOTAL length id and put len-4 starts in the code Name )
+
+
+
+
 
 --------------------------------- Boolean ---------------------------------------------
 
@@ -548,20 +718,49 @@ WHERE [coll_name] IS [TRUE or FALSE]
 
 
 
------------------------ Condition Statement (CASE WHEN) ---------------------------
-/*
+-----------------------------------------------------------------------------------------------------------------------------------------
+--------       _____                   _  _  _    _                  _____  _          _                                 _       --------
+--------      / ____|                 | |(_)| |  (_)                / ____|| |        | |                               | |      --------
+--------     | |      ___   _ __    __| | _ | |_  _   ___   _ __   | (___  | |_  __ _ | |_  ___  _ __ ___    ___  _ __  | |_     --------
+--------     | |     / _ \ | '_ \  / _` || || __|| | / _ \ | '_ \   \___ \ | __|/ _` || __|/ _ \| '_ ` _ \  / _ \| '_ \ | __|    --------
+--------     | |____| (_) || | | || (_| || || |_ | || (_) || | | |  ____) || |_| (_| || |_|  __/| | | | | ||  __/| | | || |_     --------
+--------      \_____|\___/ |_| |_| \__,_||_| \__||_| \___/ |_| |_| |_____/  \__|\__,_| \__|\___||_| |_| |_| \___||_| |_| \__|    --------
+--------                                                                                                                         --------
+-----------------------------------------------------------------------------------------------------------------------------------------
 
-*/
+----------------------------------------- Condition Statement (CASE WHEN) <-- (IF_ELSE) -------------------------------------------------
+
+
 
 SELECT [coll_name],
        CASE
-              WHEN [salary_coll]>2000 THEN 'A'
+              WHEN [salary_coll]>2000    THEN 'A'
               WHEN [salary_coll] BETWEEN THEN 'B'
               ELSE 'C'
-       END AS 'Salary_rank_Coll_name'
+       END    AS 'Salary_rank_Coll_name'
+       
 FROM [table_name]
 WHERE [condition]
 
+
+
+
+----------------------------- INNER CASE EXAMPLE --------------------------- 
+
+SELECT 
+    employee_id,
+    first_name,
+    salary,
+    CASE 
+        WHEN salary < 50000 THEN 'Low Salary'
+        WHEN salary >= 50000 AND salary <= 100000 THEN 'Medium Salary'
+        ELSE 
+            CASE 
+                WHEN salary > 100000 THEN 'High Salary'
+                ELSE 'Unknown'
+            END
+    END  AS salary_category
+FROM employees;
 
 
 
@@ -570,32 +769,44 @@ WHERE [condition]
 /*
        Numeric,String, DATE function Works Row Wise
        You can use func in SELECT and WHERE
-
 */
 
 
 
------------------------ Numeric Functions ---------------------------
-
-
-ABS()         ---->  SELECT ABS([coll_name])
-
-FLOOR()       ---->  SELECT FLOOR([coll_name])
-
-CEIL()       ---->  SELECT CEIL([coll_name])
 
 
 
-ROUND(x)/Round(x,D) ------> SELECT ROUND([coll_name])
+---------|   _   _                                _         ______                      |---------
+---------|  | \ | |                              (_)       |  ____|                     |---------
+---------|  |  \| | _   _  _ __ ___    ___  _ __  _   ___  | |__  _   _  _ __    ___    |---------
+---------|  | . ` || | | || '_ ` _ \  / _ \| '__|| | / __| |  __|| | | || '_ \  / __|   |---------
+---------|  | |\  || |_| || | | | | ||  __/| |   | || (__  | |   | |_| || | | || (__    |---------
+---------|  |_| \_| \__,_||_| |_| |_| \___||_|   |_| \___| |_|    \__,_||_| |_| \___|   |---------
+---------|                                                                              |---------
+                                                                          
 
-Example: 
+
+----------------------- Numeric Functions --------------------------- 
+
+
+1. ABS()         ---->  SELECT ABS([coll_name])
+2. FLOOR()       ---->  SELECT FLOOR([coll_name])
+3. CEIL()        ---->  SELECT CEIL([coll_name])
+
+
+
+4. ROUND(x)/Round(x,D) ------> SELECT ROUND([coll_name]) 
+
+
+Examples: 
 SELECT ROUND(1.34)         ---> 1
 SELECT ROUND(1.34, 1)      ---> 1.3
 SELECT ROUND(1.45678, 3)   ---> 1.457       ///--->  ROUND decimal Value
 
 
 
-TRUNCATE(x,D)      -------> SELECT TRUNCATE([coll_name])
+
+5. TRUNCATE(x,D)      -------> SELECT TRUNCATE([coll_name])
 
 Example:  
 SELECT TRUNCATE(1.34, 1)      ---> 1.3
@@ -606,113 +817,15 @@ SELECT TRUNCATE(1.45, 1)      ---> 1.4
 
 
 
------------------------ String Functions ---------------------------
-
-LENGTH()  
-UPPER()  
-LOWER()
-REVERSE()       
-CONCATE()  ----> concatenation of string  [CONCAT(string1, string2, ...)]
-
-SUBSTRING(string, start_position, length)          SUBSTRING or SUBSTR: Extracts a substring from a string.
-
-
-TRIM(string)  TRIM: Removes leading and trailing spaces from a string.
-
-
-
-
-
-Example of concatenation: CONCAT(first_name,' ', last_name) AS full_Name
-
-
-/// bIG Example
-
-SELECT employee_id,first_name,
-		CASE 
-       		WHEN salary>=1000 THEN
-				CONCAT(
-            		salary DIV 1000,' Thousands ',
-            		(salary%1000) DIV 100, ' Hundreds ',
-            		salary % 100, ' Taka'
-            		  )
-            WHEN salary>=100  THEN
-				CONCAT(
-            		(salary) DIV 100, ' Hundreds ',
-            		salary % 100, ' Taka'
-            		  )	
-            ELSE
-				CONCAT( 
-            		salary % 100, ' Taka'
-            		)	
-            
-		END AS AMOUNT, salary
-FROM employees
-ORDER BY salary ASC;
-
-
-///
-
-
-
-
-SUBSTR(str,pos)      ------> SUBSTR(first_name , 3)   [3rd position included] 
-                     ------> output(first_name's 3rd index to last)
-                     ------> String index count from 1
-
-
-
-SUBSTR(str,pos,len)      ------> SUBSTR(first_name , 3, 4)   [From 3rd position and Take 4 index, index start from 1]
-
-
-LEFT(str, len)           ------> LEFT('abcd', 2) => ab
-RIGHT(str,len)           ------> RIGHT('abcd', 2) => cd
-
-
-
-
------------ LPAD ----------- (Increase string Length)
-
-LPAD(str, len, padstr)    
-
-/// SELECT LPAD('abcd', 8, 'xyz') 
-/// -- Output: xyzxabcd
-
-
-/// SELECT LPAD('abcd', 8, '*') 
-/// -- Output: ****abcd   
-
-
-
-RPAD(str, len, padstr) 
-
-/// SELECT RPAD('abcd',6,'x')
-/// -- Output:  abcdxx
-///                 --
-
-
-
-
-/**** BIG EXAMPLE
-
-SELECT employee_id,
-		LOWER(
-			CONCAT(
-				SUBSTR(first_name,1,2)
-        		,'_',            
-           	 RIGHT(last_name,2)
-          	  )
-        ) AS Code_NAME
-FROM employees
-ORDER BY salary ASC;
-
--------------------------> MORE WORK ( COUNT THER TOTAL LEn id and put len-4 starts in the code Name )
-
-***/
-
-
-
-
+-----------------------------------------------------------------------------------------------------------------------------                                                                                       
+-----------|     _____         _______  ______   _______  _____  __  __  ______      ______                      |-----------   
+-----------|    |  __ \    /\ |__   __||  ____| |__   __||_   _||  \/  ||  ____|    |  ____|                     |-----------   
+-----------|    | |  | |  /  \   | |   | |__       | |     | |  | \  / || |__       | |__  _   _  _ __    ___    |-----------   
+-----------|    | |  | | / /\ \  | |   |  __|      | |     | |  | |\/| ||  __|      |  __|| | | || '_ \  / __|   |-----------   
+-----------|    | |__| |/ ____ \ | |   | |____     | |    _| |_ | |  | || |____     | |   | |_| || | | || (__    |-----------   
+-----------|    |_____//_/    \_\|_|   |______|    |_|   |_____||_|  |_||______|    |_|    \__,_||_| |_| \___|   |-----------   
+-----------|                                                                                                     |-----------   
+-----------------------------------------------------------------------------------------------------------------------------                                                                                       
 
 
 -----------------------------------------------------------------------
@@ -725,7 +838,6 @@ CURDATE()         -----------> returns the current date
 CURTIME()         -----------> returns the current time
 
 
-
 DATE(datetime)      --------------> only date part      
 TIME(datetime)      --------------> only time part
 HOUR(datetime)      --------------> only hour part
@@ -736,18 +848,16 @@ MONTH(datetime)     --------------> only month part
 YEAR(datetime)      --------------> only year part
 
 
-
-
 DATEDIFF(datetime1, datetime2)    ------------>  Return number of days
 TIMEDIFF(datetime1, datetime2)    ------------>  Return time diff 
-
 
 
 DATE_ADD(datetime, INTERVAL n unit)                 ///  unit = SECOND /MINUTE /HOUR / DAY /MONTH /YEAR
 DATE_SUB(datetime, INTERVAL n unit) 
 
-EXAMPLE:  DATE_ADD(hire_date, INTERVAL 1 DAY)
 
+
+EXAMPLE:  DATE_ADD(hire_date, INTERVAL 1 DAY) 
 
 
 
@@ -781,6 +891,18 @@ From customer;
 
 
 
+-----------------------------------------------------------------------------------------------
+-------------|         _____        _           ______                           |-------------
+-------------|        / ____|      | |         |  ____|                          |-------------
+-------------|       | (___    ___ | |_        | |__  _   _  _ __    ___         |-------------
+-------------|        \___ \  / _ \| __|       |  __|| | | || '_ \  / __|        |-------------
+-------------|        ____) ||  __/| |_    _   | |   | |_| || | | || (__         |-------------
+-------------|       |_____/  \___| \__|  (_)  |_|    \__,_||_| |_| \___|        |-------------
+-------------|                                                                   |-------------
+-----------------------------------------------------------------------------------------------
+
+
+
 -----------------------------------------------------------------------
 ----------------------------- UNION -----------------------------------
 -----------------------------------------------------------------------
@@ -792,7 +914,8 @@ Example: 1
        SELECT first_name, manager_id
        FROM employees
        WHERE manager_id = 100
-)      UNION
+)      
+UNION
 (
        SELECT first_name, manager_id
        FROM employees
@@ -813,7 +936,8 @@ Example: 1
        SELECT first_name, manager_id, salary
        FROM employees
        WHERE manager_id = 100
-)      INTERSECT                                   ///----> (A intersection B)
+)      
+INTERSECT                                   ///----> (A intersection B)
 (
        SELECT first_name, manager_id, salary
        FROM employees
@@ -833,7 +957,8 @@ Example: 1
        SELECT first_name, manager_id, salary
        FROM employees
        WHERE manager_id = 100
-)      except                                       ///----> (A-B)
+)      
+except                                       ///----> (A-B)
 (
        SELECT first_name, manager_id, salary
        FROM employees
@@ -844,26 +969,61 @@ Example: 1
 
 
 
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+--------------------                      _                                      _____   ____   _              --------------------
+--------------------            /\       | |                                    / ____| / __ \ | |             --------------------
+--------------------           /  \    __| |__   __ __ _  _ __    ___  ___     | (___  | |  | || |             --------------------
+--------------------          / /\ \  / _` |\ \ / // _` || '_ \  / __|/ _ \     \___ \ | |  | || |             --------------------
+--------------------         / ____ \| (_| | \ V /| (_| || | | || (__|  __/     ____) || |__| || |____         --------------------
+--------------------        /_/    \_\\__,_|  \_/  \__,_||_| |_| \___|\___|    |_____/  \___\_\|______|        --------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+                                                                            
+                                                                            
+                             
 
 
-                                        -------------------------------------------------------------------------
-                                                                  Aggregat, Join
-                                                  ------------------------------------------->  
-                                         (Basic)    ------------------------------------------->    (Advanced)
-                                                  ------------------------------------------->  
-                                        
-                                        -------------------------------------------------------------------------
+
+                         -------------------------------------------------------------------------
+                                                   Aggregat, Join
+                                  ------------------------------------------->  
+                          (Basic)    ------------------------------------------->    (Advanced)
+                                   ------------------------------------------->  
+                         
+                          -------------------------------------------------------------------------
 
 
 
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Aggregate Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+-----------------------------------------------------------------------------------------------------------------------------------
+------------|                                                      _            ______                           |------------
+------------|         /\                                          | |          |  ____|                          |------------
+------------|        /  \    __ _   __ _  _ __  ___   __ _   __ _ | |_  ___    | |__  _   _  _ __    ___         |------------
+------------|       / /\ \  / _` | / _` || '__|/ _ \ / _` | / _` || __|/ _ \   |  __|| | | || '_ \  / __|        |------------
+------------|      / ____ \| (_| || (_| || |  |  __/| (_| || (_| || |_|  __/   | |   | |_| || | | || (__         |------------
+------------|     /_/    \_\\__, | \__, ||_|   \___| \__, | \__,_| \__|\___|   |_|    \__,_||_| |_| \___|        |------------
+------------|                __/ |  __/ |             __/ |                                                      |------------
+------------|               |___/  |___/             |___/                                                       |------------
+-----------------------------------------------------------------------------------------------------------------------------------
+-----------------------------------------------------------------------------------------------------------------------------------
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Aggregate Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
---> SELECT groupFunc(Coll_1)    /// menas it will aply on whol column
+
+---> can write in SELECT, HAVING, ORDER BY
+---> also use in WHERE but have to use it in a subquery and use that in WHERE 
+
+
+
+--> SELECT groupFunc(Coll_1)    /// menas it will apply on whole column 
+
 
 
 Aggregate Function
@@ -884,7 +1044,7 @@ COUNT(Coll_1) , COUNT(Coll_1) , COUNT(*)
 SELECT    (Aggregat_Func)
 FROM
 WHERE
-ORDER BY
+ORDER BY    (Aggregat_Func)
 LIMIT
 
 */
@@ -903,6 +1063,16 @@ SELECT MAX(Coll_1), MIN(Coll_1), COUNT(Coll_1), SUM(Coll_1) , AVG(Coll_1)
 
 
 
+-----------------------------------------------------------------
+-------|      _____  _____    ____   _    _  _____       |-------
+-------|     / ____||  __ \  / __ \ | |  | ||  __ \      |-------
+-------|    | |  __ | |__) || |  | || |  | || |__) |     |-------
+-------|    | | |_ ||  _  / | |  | || |  | ||  ___/      |-------
+-------|    | |__| || | \ \ | |__| || |__| || |          |-------
+-------|     \_____||_|  \_\ \____/  \____/ |_|          |-------
+-----------------------------------------------------------------
+                                        
+
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>      Creating Group      <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
 
@@ -913,9 +1083,9 @@ SELECT
 FROM
 WHERE
 
-GROUP BY    Coll_1, Coll_2.. | Expression_1, Expression_2....    <<----------------
+GROUP BY    Coll_1, Coll_2.. | Expression_1, Expression_2....  
 
-ORDER BY
+ORDER BY      (Aggregat_Func)
 LIMIT
 
 */
@@ -943,7 +1113,21 @@ LIMIT
 */
 
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>  Having 
+
+
+--------------------------------------------------------------------------------
+ -------------|      _    _                _                     |--------------
+ -------------|     | |  | |              (_)                    |--------------
+ -------------|     | |__| |  __ _ __   __ _  _ __    __ _       |--------------
+ -------------|     |  __  | / _` |\ \ / /| || '_ \  / _` |      |--------------
+ -------------|     | |  | || (_| | \ V / | || | | || (_| |      |--------------
+ -------------|     |_|  |_| \__,_|  \_/  |_||_| |_| \__, |      |--------------
+ -------------|                                       __/ |      |--------------
+ -------------|                                      |___/       |--------------
+--------------------------------------------------------------------------------
+
+     >>>>>>>>>>>>>>>>>>>>>>>>>>>>  Having  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
 
 --> If you want to filter after creating Group.
 --> USED for Group filter ***
@@ -959,6 +1143,7 @@ HAVING condition        <<<----- Aggregat Func related condition
 
 ORDER BY
 LIMIT
+OFFSET 
 
 */
 
@@ -966,7 +1151,7 @@ LIMIT
 
 EXAMPLE 1: 
 --------------------
-SELECT  LEFT(first_name,1) AS First_Char , COUNT(*)
+SELECT  LEFT(first_name,1) AS First_Char , COUNT(*)  
 FROM employees
 WHERE job_id != 'IT_PROG'
 GROUP BY LEFT(first_name,1)
@@ -992,8 +1177,8 @@ ORDER BY hire_date;
 EXAMPLE 4: 
 --------------------
 SELECT department_id,
-	CASE
-	     WHEN salary<10000 THEN 'A'
+	    CASE
+	        WHEN salary<10000 THEN 'A'
             WHEN 10000<= salary <= 20000 THEN 'B'
             ELSE 'C'
         END AS SALARY_class,
