@@ -688,6 +688,15 @@ ORDER BY salary ASC;
 /// SELECT RPAD('abcd',6,'x')           -->>  Output:  abcdxx
 
 
+13. REPLACE(original_string, substring_to_replace, replacement_string)     //---->> It can also replace Integer digits
+
+
+EXAMPLE:
+-----------
+SELECT  AVG(REPLACE(salary, '0', ''))
+FROM EMPLOYEES
+
+
 
 
 /**** GOOD EXAMPLE ***\
