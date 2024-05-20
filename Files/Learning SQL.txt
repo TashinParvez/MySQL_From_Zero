@@ -290,7 +290,7 @@ SELET coll_1 + 3,
       coll_2 * 4
 FROM [table_Name]
 
-        --------------------
+        -------------------- 
 
 SELET coll_1 + coll_4, 
       coll_2 / coll_5
@@ -525,7 +525,7 @@ ________________________________________________________________________________
 
 SELECT [coll_name]
 FROM [table_name]
-# where salary >=1000 AND salary<=10000  ------> OLD APPROACH
+# where salary >=1000 AND salary<=10000  ------> OLD APPROACH 
 
 WHERE salary BETWEEN 1000 AND 10000      ------> two values are (** included **)
 
@@ -842,9 +842,14 @@ SELECT TRUNCATE(1.45, 1)      ---> 1.4
 -----------------------------------------------------------------------
 
 
-NOW()             -----------> returns the current date with time
-CURDATE()         -----------> returns the current date
-CURTIME()         -----------> returns the current time
+  NOW()                  -----------> returns the current date with time
+  CURDATE()              -----------> returns the current date
+  CURTIME()              -----------> returns the current time
+  LAST_DAY(date_column)      -------> returns the last_day_of_month 
+
+
+//  Example:  LAST_DAY('2024-02-15') will return '2024-02-29'
+
 
 
 DATE(datetime)      --------------> only date part      
@@ -1020,7 +1025,7 @@ except                                       ///----> (A-B)
 -----------------------------------------------------------------------------------------------------------------------------------
 -----------------------------------------------------------------------------------------------------------------------------------
 
->>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>                       <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<)))))))))))))))))<<<<<<
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Aggregate Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Group Wise Func    <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
 
@@ -1705,6 +1710,97 @@ WHERE salary in (
 
 
 
+
+
+
+
+
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>   Window Function  <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>        <<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<
+
+
+----------------------    over()     ----------------------
+
+
+SELECT first_name,salary, MAX(salary) over() max_salary    # here over treat MAX() Aggregat func as window function 
+FROM employees 
+
+
+
+SELECT first_name, salary, manager_id,  MAX(salary) over(PARTITION BY manager_id) AS Max_salary
+FROM employees
+ORDER by manager_id, salary;
+
+
+
+----------------------    row_number()    ----------------------
+
+
+SELECT  first_name, manager_id,
+		row_number() over(PARTITION by manager_id)  as rn
+FROM employees;
+
+
+
+
+SELECT *
+FROM(
+    SELECT  employee_id, first_name, manager_id, salary,
+    row_number() over(PARTITION by manager_id ORDER by employee_id)  as rn
+    FROM employees) AS ntb
+WHERE ntb.rn < 3;
+
+
+
+
+
+----------------------    rank()    ----------------------
+
+SELECT  first_name, manager_id, salary,manager_id,
+		rank() over(PARTITION BY manager_id order by salary DESC) AS rnk
+FROM employees;
+
+
+
+
+
+----------------------    dense_rank()    ----------------------
+
+SELECT  first_name, manager_id, salary,manager_id,
+		rank() over(PARTITION BY manager_id order by salary DESC) AS rnk,
+        dense_rank() over(PARTITION BY manager_id order by salary DESC) AS dense_rnk
+FROM employees;
+
+
+
+
+
+----------------------    lag()    ----------------------
+
+SELECT first_name, manager_id, salary,department_id,
+		lag(salary) OVER(PARTITION BY department_id ORDER BY employee_id ) AS prev_emp_salary
+FROM employees;
+
+
+
+
+----------------------    lead()    ----------------------
+
+SELECT first_name, manager_id, salary,department_id,
+		lag(salary) OVER(PARTITION BY department_id ORDER BY employee_id ) AS prev_emp_salary,
+        lead(salary) OVER(PARTITION BY department_id ORDER BY employee_id ) AS next_emp_salary
+FROM employees;
+
+
+
+
+
+
+
+----------------------------------------------------------------------------------------
+-------------------------  Convert data from Rows to Columns   -------------------------
+----------------------------------------------------------------------------------------
 
 
 

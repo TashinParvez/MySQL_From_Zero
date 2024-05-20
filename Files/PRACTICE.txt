@@ -1,0 +1,7 @@
+SELECT
+    MAX(CASE WHEN occupation = 'doctor' THEN name ELSE NULL END) AS Doctor,
+    MAX(CASE WHEN occupation = 'professor' THEN name ELSE NULL END) AS Professor,
+    MAX(CASE WHEN occupation = 'singer' THEN name ELSE NULL END) AS Singer,
+    MAX(CASE WHEN occupation = 'actor' THEN name ELSE NULL END) AS Actor
+FROM (select name, occupation, row_number() over (partition by occupation order by name) as row_n from occupations) as sub
+group by sub.row_n;
