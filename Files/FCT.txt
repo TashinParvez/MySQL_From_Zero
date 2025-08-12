@@ -1,4 +1,0 @@
-Syllabus: DDL+DML(update, delete, select, Like, order, group, having, limit, aggregate functions)
-
-
-
